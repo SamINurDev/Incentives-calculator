@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Earning Potential · Beauty Partners KSA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF6F4; --surface:#FFFFFF; --ink:#2A1A22; --soft:#7A6A70; --faint:#A69AA0;
+  --line:#EEE1DC; --berry:#B4285E; --plum:#6D2E5B; --gold:#B07C2E;
+  --disp:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --body:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--bg);
+  padding:clamp(18px,4vw,40px);-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1060px;margin:0 auto;}
+.head{margin-bottom:20px;}
+.brand{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--berry);}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--berry);box-shadow:0 0 0 3px rgba(180,40,94,.16);}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(28px,5vw,44px);line-height:1.02;letter-spacing:-.02em;margin:12px 0 8px;}
+.sub{color:var(--soft);font-size:15px;max-width:48ch;margin:0;line-height:1.5;}
+.lookup{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:20px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;}
+.lookup .fld{flex:1;min-width:180px;}
+.lookup label{font-size:12px;font-weight:600;color:var(--ink);display:block;margin-bottom:7px;}
+.lookup input{width:100%;font-family:var(--body);font-size:16px;font-weight:500;color:var(--ink);background:#FAF2EF;border:1px solid var(--line);border-radius:11px;padding:11px 13px;outline:none;transition:.15s;}
+.lookup input:focus{border-color:var(--berry);background:#fff;box-shadow:0 0 0 3px rgba(180,40,94,.12);}
+.btn{font-family:var(--body);font-size:14px;font-weight:600;color:#fff;background:var(--berry);border:none;border-radius:11px;padding:12px 20px;cursor:pointer;transition:.15s;}
+.btn:hover{background:#9c1f4e;}
+.btn.ghost{color:var(--berry);background:none;border:1px solid var(--line);}
+.btn.ghost:hover{border-color:var(--berry);background:#FAF2EF;}
+.banner{margin:-8px 0 20px;border-radius:14px;padding:12px 16px;font-size:13.5px;display:none;}
+.banner.ok{display:block;background:#F7E4EC;color:#8A1D45;}
+.banner.err{display:block;background:#FBEAEA;color:#9A2A2A;}
+.banner b{font-weight:700;}
+.empty{background:var(--surface);border:1px dashed #E3CFC8;border-radius:16px;padding:22px 20px;}
+.empty p{margin:0;color:var(--soft);font-size:14px;line-height:1.6;} .empty b{color:var(--berry);}
+.infolink{display:inline-block;font-size:13px;font-weight:600;color:var(--berry);text-decoration:none;border-bottom:1px solid rgba(180,40,94,.35);}
+.infolink:hover{border-bottom-color:var(--berry);}
+.steps{margin:12px 0 0;padding:0;list-style:none;counter-reset:step;}
+.steps li{position:relative;padding-left:30px;margin-bottom:10px;color:var(--soft);font-size:13.5px;line-height:1.5;counter-increment:step;}
+.steps li::before{content:counter(step);position:absolute;left:0;top:-1px;width:21px;height:21px;border-radius:50%;background:var(--berry);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.steps b{color:var(--ink);}
+.emptytitle{margin:0 0 2px;color:var(--ink);font-weight:600;font-size:14px;}
+.grid{display:grid;gap:18px;grid-template-columns:1fr;align-items:start;}
+@media(min-width:900px){.grid{grid-template-columns:1.05fr .95fr;} .results{position:sticky;top:24px;}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,3vw,26px);}
+.field{margin-bottom:20px;}
+.field>label{font-size:13px;font-weight:600;color:var(--ink);display:block;margin-bottom:9px;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{font-size:13px;font-weight:500;color:var(--soft);background:#FAF2EF;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;transition:.15s;}
+.chip:hover{border-color:var(--berry);color:var(--berry);}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff;}
+.slabel{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+.slabel label{font-size:13px;font-weight:600;color:var(--ink);}
+.readout{font-family:var(--disp);font-weight:600;font-size:14px;color:var(--berry);font-variant-numeric:tabular-nums;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--berry);cursor:pointer;box-shadow:0 2px 6px rgba(180,40,94,.35);transition:transform .12s;}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12);}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--berry);cursor:pointer;box-shadow:0 2px 6px rgba(180,40,94,.35);}
+.tierbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:-6px 0 20px;}
+.tierpill{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;}
+.tierhint{font-size:12px;color:var(--faint);}
+.check{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--soft);cursor:pointer;margin:-8px 0 20px;}
+.check input{accent-color:var(--berry);width:16px;height:16px;}
+.numbox label{font-size:12px;font-weight:500;color:var(--soft);display:block;margin-bottom:6px;}
+.numbox input{width:100%;font-family:var(--body);font-size:15px;font-weight:500;color:var(--ink);background:#FAF2EF;border:1px solid var(--line);border-radius:11px;padding:9px 12px;outline:none;transition:.15s;}
+.numbox input:focus{border-color:var(--berry);background:#fff;box-shadow:0 0 0 3px rgba(180,40,94,.12);}
+.revnote{font-size:12px;color:var(--faint);margin:2px 2px 18px;line-height:1.5;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+@media(max-width:460px){.row2{grid-template-columns:1fr;}}
+.subacc{margin-top:6px;border-top:1px solid var(--line);padding-top:16px;}
+.subacc-btn{display:flex;align-items:center;gap:8px;width:100%;text-align:left;font-family:var(--body);font-size:13px;font-weight:600;color:var(--berry);background:none;border:none;cursor:pointer;padding:0;}
+.subacc-ct{margin-left:auto;transition:transform .2s;} .subacc-ct.open{transform:rotate(180deg);}
+.subacc-body{display:none;padding-top:16px;} .subacc-body.open{display:block;}
+.nprow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.npout{font-size:12px;color:var(--plum);font-weight:600;margin:8px 2px 0;}
+.total{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:18px;}
+.total-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);}
+.total-num{font-family:var(--disp);font-weight:700;font-size:clamp(40px,9vw,60px);line-height:1;letter-spacing:-.03em;color:var(--ink);margin:8px 0 6px;font-variant-numeric:tabular-nums;}
+.cur{font-size:.42em;font-weight:600;color:var(--berry);margin-right:.35em;vertical-align:.35em;letter-spacing:0;}
+.total-sub{font-size:13px;color:var(--soft);}
+.breakdown{display:flex;flex-direction:column;gap:13px;margin-bottom:20px;}
+.btop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.bname{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--ink);}
+.swatch{width:12px;height:12px;border-radius:4px;flex:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.5);}
+.bnote{font-size:11px;font-weight:400;color:var(--faint);}
+.bval{font-family:var(--disp);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;}
+.track{height:8px;background:#F3E9E5;border-radius:99px;overflow:hidden;}
+.fill{height:100%;border-radius:99px;transition:width .3s cubic-bezier(.4,0,.2,1);box-shadow:inset 0 1px 1px rgba(255,255,255,.35);}
+.empty-break{font-size:13px;color:var(--faint);padding:6px 0 12px;}
+.potential{background:linear-gradient(135deg,#FBEFE2,#F7E4EC);border-radius:16px;padding:16px 18px;}
+.pot-head{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);}
+.pot-num{font-family:var(--disp);font-weight:700;font-size:30px;letter-spacing:-.02em;color:var(--ink);margin:4px 0 6px;font-variant-numeric:tabular-nums;}
+.pot-msg{font-size:13px;line-height:1.5;color:#6B3A2E;margin:0;} .pot-msg b{color:var(--berry);}
+.disc{margin-top:18px;}
+.acc{display:flex;align-items:center;gap:9px;width:100%;text-align:left;font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px;cursor:pointer;transition:.15s;}
+.acc:hover{border-color:var(--berry);}
+.caret{margin-left:auto;transition:transform .2s;color:var(--faint);} .caret.open{transform:rotate(180deg);}
+.acc-body{background:var(--surface);border:1px solid var(--line);border-top:none;border-radius:0 0 14px 14px;margin-top:-11px;padding:6px 18px 18px;display:none;}
+.acc-body.open{display:block;}
+.acc-body ul{margin:8px 0 0;padding-left:18px;color:var(--soft);font-size:13.5px;line-height:1.65;}
+.acc-body li{margin-bottom:7px;} .acc-body strong{color:var(--ink);}
+.foot{font-size:12px;color:var(--faint);line-height:1.5;margin:16px 2px 40px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <div class="brand"><span class="dot"></span><span>Beauty Partner Studio · KSA</span></div>
+    <h1>Your earning potential</h1>
+    <p class="sub">Enter your L-number to see your incentive earnings and exactly how to lift them — or choose Just explore to try the numbers.</p>
+    <a class="infolink" style="margin-top:12px" href="https://fahadshahzeb-jpg.github.io/beauty-incentive-scheme/incentive-structure.html" target="_blank" rel="noopener">Read the full incentive scheme ↗</a>
+  </header>
+
+  <div class="lookup">
+    <div class="fld"><label for="lno">Your L-number</label><input id="lno" placeholder="e.g. L_204506" autocomplete="off" /></div>
+    <button class="btn" id="findBtn">Find my earnings</button>
+    <button class="btn ghost" id="clearBtn">Just explore</button>
+  </div>
+  <div class="banner" id="banner"></div>
+  <div class="empty" id="empty">
+    <p class="emptytitle">How to use this page</p>
+    <ol class="steps">
+      <li>Type your <b>L-number</b> in the box above and tap <b>Find my earnings</b>.</li>
+      <li>Your activity fills in automatically — your total and a full breakdown appear on the right.</li>
+      <li>Drag the sliders for jobs, rating and rebookings to see how your earnings change.</li>
+      <li>The <b>Maximum potential</b> box shows what you could reach, and how to get there.</li>
+    </ol>
+    <p style="margin-top:12px">No L-number yet? Tap <b>Just explore</b> to try it with example numbers.</p>
+  </div>
+
+  <div id="app" style="display:none">
+  <div class="grid">
+    <section class="card" aria-label="Your inputs">
+      <div class="field"><label>Service line</label><div class="chips" id="chips"></div></div>
+
+      <div class="field"><div class="slabel"><label>Jobs completed this month</label><span class="readout" id="jobsOut"></span></div>
+        <input type="range" id="jobs" min="0" max="150" step="1" /></div>
+
+      <div class="field"><div class="slabel"><label>Average rating (last 50 jobs)</label><span class="readout" id="ratingOut"></span></div>
+        <input type="range" id="rating" min="4.0" max="5.0" step="0.01" /></div>
+      <div class="tierbar"><span class="tierpill" id="tierpill"></span><span class="tierhint" id="tierhint"></span></div>
+
+      <div class="field"><div class="slabel"><label>Jobs rebooked</label><span class="readout" id="rebookOut"></span></div>
+        <input type="range" id="rebook" min="0" max="60" step="1" /></div>
+      <label class="check"><input type="checkbox" id="active30" checked /> Working more than 30 days (required to earn rebooking)</label>
+
+      <div class="row2">
+        <div class="numbox"><label>Avg service value (SAR/job)</label><input type="number" id="avg" min="0" /></div>
+        <div class="numbox"><label>Tips this month (SAR)</label><input type="number" id="tips" min="0" /></div>
+      </div>
+      <p class="revnote" id="revnote"></p>
+
+      <div class="subacc">
+        <button class="subacc-btn" id="moreBtn">+ Other incentives (new-pro, referrals, shares, shadowing)<span class="caret subacc-ct" id="moreCt">▾</span></button>
+        <div class="subacc-body" id="moreBody">
+          <label class="check" style="margin:0 0 4px"><input type="checkbox" id="newpro" /> I'm a new pro (within my first 150 jobs)</label>
+          <div class="nprow" id="npRow" style="display:none">
+            <div class="numbox"><label>5-star ratings</label><input type="number" id="fivestar" min="0" /></div>
+            <div class="numbox"><label>Ratings 3.5 or below</label><input type="number" id="badr" min="0" /></div>
+          </div>
+          <p class="npout" id="npOut" style="display:none"></p>
+
+          <div class="row2" style="margin-top:16px">
+            <div class="numbox"><label>Profile shares converted (×50)</label><input type="number" id="shares" min="0" /></div>
+            <div class="numbox"><label>Candidate referrals (×500)</label><input type="number" id="referrals" min="0" /></div>
+          </div>
+          <label class="check" style="margin:0 0 16px"><input type="checkbox" id="shadow" /> Mentee reached 4.8+ over first 10 jobs (shadowing · SAR 50)</label>
+          <div class="numbox"><label>Base pay (SAR, optional)</label><input type="number" id="base" min="0" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card results" aria-label="Your earnings">
+      <div class="total"><span class="total-label">Estimated incentives this cycle</span>
+        <div class="total-num"><span class="cur">SAR</span><span id="totalNum"></span></div>
+        <span class="total-sub" id="totalSub"></span></div>
+      <div class="breakdown" id="breakdown"></div>
+      <div class="potential"><div class="pot-head">Maximum potential at <span id="potJobs"></span>&nbsp;jobs</div>
+        <div class="pot-num">SAR <span id="potNum"></span></div>
+        <p class="pot-msg" id="potMsg"></p></div>
+    </section>
+  </div>
+
+  <div class="disc">
+    <button class="acc" id="useBtn">How to use this page<span class="caret" id="useCaret">▾</span></button>
+    <div class="acc-body" id="useBody">
+      <ol class="steps" style="margin-top:12px">
+        <li>Enter your <b>L-number</b> and tap <b>Find my earnings</b> to load your figures.</li>
+        <li>Read your <b>estimated incentives</b> and the coloured breakdown of where they come from.</li>
+        <li>Move the sliders to test "what if" — more jobs, a higher rating, more rebookings.</li>
+        <li>Open <b>Other incentives</b> to add referrals, shares, shadowing or new-pro ratings.</li>
+        <li>Use the <b>Maximum potential</b> figure as your target for the month.</li>
+      </ol>
+      <a class="infolink" style="margin-top:14px" href="https://fahadshahzeb-jpg.github.io/beauty-incentive-scheme/incentive-structure.html" target="_blank" rel="noopener">Read the full incentive scheme ↗</a>
+    </div>
+    <button class="acc" id="howBtn">How earnings are calculated<span class="caret" id="howCaret">▾</span></button>
+    <div class="acc-body" id="howBody"><ul>
+      <li><strong>Rebooking</strong> — rebooked jobs × your rating tier: SAR 18 at 4.97★+, 15 at 4.90–4.96, 8 at 4.85–4.89, none below 4.85. Requires working more than 30 days.</li>
+      <li><strong>Commission</strong> — 3% of monthly GMV above SAR 15,000 (GMV = jobs × avg service value). None if your rating is below 4.85.</li>
+      <li><strong>New pro</strong> — SAR 5 per 5-star rating minus SAR 3 per rating of 3.5 or below, for your first 150 jobs only. Never below zero.</li>
+      <li><strong>Share profile</strong> — SAR 50 each time a customer's share link converts to a delivered service within 7 days (rating 4.85+).</li>
+      <li><strong>Referral</strong> — SAR 500 per candidate you refer who passes interview and arrives in KSA. <strong>Tips</strong> — 100% of tips, always.</li>
+      <li><strong>Shadowing</strong> — SAR 50 if your assigned mentee averages above 4.8 across their first 10 jobs.</li>
+    </ul>
+    <a class="infolink" style="margin-top:14px" href="https://fahadshahzeb-jpg.github.io/beauty-incentive-scheme/incentive-structure.html" target="_blank" rel="noopener">Full details &amp; examples ↗</a></div>
+    <p class="foot">Figures are indicative and exclude deductions. Rating tiers use your average over the last 50 rated jobs. Commission uses the 3%-above-SAR-15,000 rule on GMV after discounts.</p>
+  </div>
+  </div>
+</div>
+
+<script>
+const SHOW_NAMES = true;               // set to false to hide provider names in the lookup
+const PROVIDERS = [{"l":"L_204506","n":"Jovelyn","c":"Salon Nails","city":"Riyadh","j":68,"r":4.98,"rb":10,"t":119.0,"cm":0.0,"np":0,"rf":1000,"av":null},{"l":"L_191602","n":"Sahra Barsiga","c":"Spa for Women","city":"Taif","j":67,"r":5.0,"rb":29,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201812","n":"Lalein Untalan","c":"Salon Nails","city":"Riyadh","j":114,"r":5.0,"rb":34,"t":75.0,"cm":89.52,"np":0,"rf":0,"av":157.8},{"l":"L_185381","n":"Metshelyn Arenas","c":"Spa for Women","city":"Riyadh","j":123,"r":4.97,"rb":35,"t":195.0,"cm":245.4,"np":0,"rf":0,"av":188.5},{"l":"L_191273","n":"Irish Villareal","c":"Spa for Women","city":"Riyadh","j":95,"r":4.97,"rb":37,"t":145.0,"cm":174.99,"np":0,"rf":0,"av":219.3},{"l":"L_203263","n":"Nelly Dile Dacula","c":"Salon Nails","city":"Riyadh","j":82,"r":4.99,"rb":30,"t":100.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204511","n":"Marivic Dadios","c":"Salon Nails","city":"Riyadh","j":114,"r":5.0,"rb":39,"t":80.0,"cm":121.23,"np":0,"rf":0,"av":167.0},{"l":"L_198450","n":"Jerose Ann Esperanza","c":"Salon Nails","city":"Riyadh","j":113,"r":4.91,"rb":43,"t":120.0,"cm":120.51,"np":0,"rf":0,"av":168.3},{"l":"L_190527","n":"Lilibeth Elsisura","c":"Spa for Women","city":"Riyadh","j":76,"r":4.97,"rb":40,"t":25.0,"cm":27.81,"np":0,"rf":0,"av":209.6},{"l":"L_190532","n":"Charlene Ancheta","c":"Salon Nails","city":"Riyadh","j":105,"r":5.0,"rb":38,"t":155.0,"cm":62.34,"np":0,"rf":0,"av":162.6},{"l":"L_195915","n":"Shella Mae Moises","c":"Salon Nails","city":"Riyadh","j":91,"r":4.98,"rb":40,"t":65.0,"cm":14.76,"np":0,"rf":0,"av":170.2},{"l":"L_204442","n":"Rowena Bonifacio Lozano","c":"Spa for Women","city":"Madinah","j":97,"r":4.92,"rb":19,"t":105.0,"cm":82.38,"np":0,"rf":0,"av":182.9},{"l":"L_189417","n":"Reneva Jane Durango","c":"Salon Nails","city":"Riyadh","j":84,"r":4.9,"rb":48,"t":75.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203537","n":"Lolita Bolante","c":"Spa for Women","city":"Riyadh","j":76,"r":4.99,"rb":37,"t":75.0,"cm":24.84,"np":0,"rf":0,"av":208.3},{"l":"L_191271","n":"Annalyn Musni","c":"Spa for Women","city":"Riyadh","j":73,"r":5.0,"rb":38,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_196442","n":"Mahrade Billones","c":"Salon Nails","city":"Buraydah","j":102,"r":4.92,"rb":22,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_198041","n":"Mikee Rose Martinez","c":"Salon Nails","city":"Jeddah","j":95,"r":4.98,"rb":34,"t":135.0,"cm":43.56,"np":0,"rf":0,"av":173.2},{"l":"L_215663","n":"Rina Kervylyn Baesa","c":"Spa for Women","city":"Riyadh","j":73,"r":4.89,"rb":17,"t":45.0,"cm":0.0,"np":0,"rf":500,"av":null},{"l":"L_199434","n":"Analy Villaflor","c":"Salon Nails","city":"Riyadh","j":112,"r":4.97,"rb":29,"t":60.0,"cm":92.16,"np":0,"rf":0,"av":161.4},{"l":"L_201815","n":"Emma Passilan","c":"Salon Nails","city":"Riyadh","j":113,"r":4.92,"rb":15,"t":115.0,"cm":74.82,"np":0,"rf":0,"av":154.8},{"l":"L_191277","n":"Christine Bercadez","c":"Spa for Women","city":"Riyadh","j":113,"r":4.91,"rb":27,"t":20.0,"cm":188.46,"np":0,"rf":0,"av":188.3},{"l":"L_185305","n":"Sitti Pasangan","c":"Salon Nails","city":"Jeddah","j":87,"r":5.0,"rb":32,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203902","n":"Melissa Dungca","c":"Spa for Women","city":"Riyadh","j":71,"r":5.0,"rb":32,"t":220.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185061","n":"Cristine Joy D. Cuod","c":"Spa for Women","city":"Jeddah","j":57,"r":5.0,"rb":32,"t":120.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191843","n":"Joan Dela Cruz","c":"Spa for Women","city":"Riyadh","j":88,"r":4.95,"rb":35,"t":135.0,"cm":49.47,"np":0,"rf":0,"av":189.2},{"l":"L_202156","n":"Riza Lucero","c":"Spa for Women","city":"Riyadh","j":95,"r":4.95,"rb":30,"t":140.0,"cm":119.43,"np":0,"rf":0,"av":199.8},{"l":"L_194149","n":"Mayflor Capili","c":"Salon Nails","city":"Riyadh","j":109,"r":4.92,"rb":28,"t":140.0,"cm":124.77,"np":0,"rf":0,"av":175.8},{"l":"L_195917","n":"Richelle Dela Peña","c":"Salon Nails","city":"Madinah","j":102,"r":4.99,"rb":15,"t":50.0,"cm":1.2,"np":0,"rf":0,"av":147.5},{"l":"L_195912","n":"Maria Jasmine","c":"Spa for Women","city":"Buraydah","j":57,"r":4.99,"rb":15,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_211884","n":"Marites Librabilla","c":"Salon Nails","city":"Riyadh","j":89,"r":4.99,"rb":13,"t":75.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185115","n":"Cherry Alvarez Vasquez","c":"Spa for Women","city":"Riyadh","j":83,"r":4.95,"rb":31,"t":40.0,"cm":66.21,"np":0,"rf":0,"av":207.3},{"l":"L_213426","n":"Wilma Garcia","c":"Spa for Women","city":"Riyadh","j":100,"r":4.91,"rb":21,"t":230.0,"cm":191.04,"np":0,"rf":0,"av":213.7},{"l":"L_208401","n":"Rona Siriban Macabangun","c":"Spa for Women","city":"Riyadh","j":104,"r":4.92,"rb":23,"t":70.0,"cm":148.26,"np":0,"rf":0,"av":191.8},{"l":"L_203264","n":"Shella Mae Peller","c":"Salon Nails","city":"Riyadh","j":75,"r":4.87,"rb":24,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207365","n":"Charmie Rose Galenzoga","c":"Salon Nails","city":"Riyadh","j":86,"r":4.9,"rb":32,"t":85.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_195914","n":"Cecille Cabungcay","c":"Salon Nails","city":"Riyadh","j":81,"r":4.9,"rb":32,"t":194.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204509","n":"Sherlyn Madayag Bayubay","c":"Spa for Women","city":"Hofuf","j":69,"r":4.91,"rb":16,"t":35.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_205913","n":"Liezl Antorpia","c":"Salon Nails","city":"Riyadh","j":110,"r":4.97,"rb":22,"t":165.0,"cm":74.52,"np":0,"rf":0,"av":158.9},{"l":"L_206183","n":"Jeanyfer Alabado","c":"Spa for Women","city":"Hofuf","j":64,"r":4.97,"rb":13,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204505","n":"Je Ann Francisco","c":"Salon Nails","city":"Riyadh","j":97,"r":4.9,"rb":24,"t":125.0,"cm":102.3,"np":0,"rf":0,"av":189.8},{"l":"L_202389","n":"Monica Panuncial","c":"Spa for Women","city":"Riyadh","j":73,"r":4.99,"rb":25,"t":225.0,"cm":4.08,"np":0,"rf":0,"av":207.3},{"l":"L_205916","n":"Maria Wilma O. Ramos","c":"Spa for Women","city":"Jeddah","j":88,"r":4.94,"rb":24,"t":75.0,"cm":92.25,"np":0,"rf":0,"av":205.4},{"l":"L_206068","n":"Fredie Villanueva","c":"Spa for Women","city":"Dammam","j":57,"r":4.96,"rb":15,"t":90.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206069","n":"Krizel Ganinay","c":"Spa for Women","city":"Riyadh","j":92,"r":4.95,"rb":24,"t":135.0,"cm":85.26,"np":0,"rf":0,"av":193.9},{"l":"L_201810","n":"Marjorie Malayon","c":"Salon Nails","city":"Riyadh","j":87,"r":4.88,"rb":18,"t":110.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199428","n":"Myla Lentijas Dulfo","c":"Spa for Women","city":"Riyadh","j":90,"r":5.0,"rb":20,"t":195.0,"cm":80.73,"np":0,"rf":0,"av":196.6},{"l":"L_206751","n":"Loida Rivera","c":"Salon Nails","city":"Riyadh","j":113,"r":4.91,"rb":20,"t":50.0,"cm":136.44,"np":0,"rf":0,"av":173.0},{"l":"L_201383","n":"Jocelyn Sta. Ana","c":"Salon Nails","city":"Riyadh","j":68,"r":4.95,"rb":29,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191276","n":"Janice Panahon","c":"Spa for Women","city":"Dammam","j":47,"r":4.92,"rb":14,"t":125.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203536","n":"Jenny Biantan","c":"Salon Nails","city":"Riyadh","j":121,"r":4.9,"rb":17,"t":155.0,"cm":163.5,"np":0,"rf":0,"av":169.0},{"l":"L_185380","n":"Jeralyn Arenas Sagusay","c":"Spa for Women","city":"Riyadh","j":104,"r":4.87,"rb":32,"t":35.0,"cm":162.42,"np":0,"rf":0,"av":196.3},{"l":"L_204310","n":"Desiree Ann Bagaan","c":"Salon Nails","city":"Riyadh","j":96,"r":5.0,"rb":23,"t":30.0,"cm":1.17,"np":0,"rf":0,"av":156.7},{"l":"L_191268","n":"Renalyn Portacio","c":"Spa for Women","city":"Riyadh","j":73,"r":5.0,"rb":23,"t":95.0,"cm":0.54,"np":0,"rf":0,"av":205.7},{"l":"L_195596","n":"Veronica Delos Santos","c":"Spa for Women","city":"Jeddah","j":53,"r":5.0,"rb":23,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_213423","n":"Annalyn Bucay","c":"Spa for Women","city":"Riyadh","j":100,"r":4.96,"rb":18,"t":30.0,"cm":134.25,"np":0,"rf":0,"av":194.8},{"l":"L_201595","n":"Leizl Alanis","c":"Spa for Women","city":"Riyadh","j":62,"r":4.97,"rb":22,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_196441","n":"Mauline Rose Javier","c":"Salon Nails","city":"Riyadh","j":93,"r":4.9,"rb":26,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199433","n":"Fritzie Pescador","c":"Salon Nails","city":"Riyadh","j":63,"r":4.91,"rb":26,"t":190.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199315","n":"Maria Antonieta","c":"Salon Nails","city":"Riyadh","j":101,"r":4.87,"rb":44,"t":82.0,"cm":33.66,"np":0,"rf":0,"av":159.6},{"l":"L_195594","n":"Shiela Marie Manongdo","c":"Spa for Women","city":"Riyadh","j":101,"r":4.9,"rb":17,"t":45.0,"cm":129.39,"np":0,"rf":0,"av":191.2},{"l":"L_205909","n":"Ana Antoniano","c":"Salon Nails","city":"Riyadh","j":79,"r":4.92,"rb":25,"t":85.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_180388","n":"Julita B Paran","c":"Spa for Women","city":"Riyadh","j":67,"r":4.95,"rb":25,"t":145.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_205912","n":"Eva Mae L. Montecalvo","c":"Salon Nails","city":"Riyadh","j":70,"r":4.96,"rb":25,"t":166.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204514","n":"Ma. Patricia Miles Zoleta","c":"Salon Nails","city":"Riyadh","j":76,"r":4.99,"rb":20,"t":170.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212621","n":"Donamae Catangcatang Mamaradlo","c":"Spa for Women","city":"Riyadh","j":66,"r":5.0,"rb":18,"t":135.0,"cm":0.0,"np":35,"rf":0,"av":null},{"l":"L_191842","n":"Jeanne Ygot","c":"Spa for Women","city":"Jeddah","j":101,"r":4.88,"rb":26,"t":45.0,"cm":139.65,"np":0,"rf":0,"av":194.6},{"l":"L_190528","n":"Sonia Cuerda","c":"Spa for Women","city":"Riyadh","j":91,"r":4.94,"rb":19,"t":55.0,"cm":62.55,"np":0,"rf":0,"av":187.7},{"l":"L_202091","n":"Shirley Pecayo","c":"Spa for Women","city":"Riyadh","j":71,"r":4.94,"rb":23,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206184","n":"Bianca Sacris","c":"Spa for Women","city":"Riyadh","j":69,"r":4.92,"rb":23,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206542","n":"Melisa Padual Manansala","c":"Spa for Women","city":"Jeddah","j":37,"r":4.98,"rb":19,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202216","n":"Jessalyn Garcia Cabiara","c":"Salon Nails","city":"Riyadh","j":106,"r":5.0,"rb":16,"t":90.0,"cm":48.15,"np":0,"rf":0,"av":156.7},{"l":"L_204513","n":"Julianne Paguio","c":"Salon Nails","city":"Dammam","j":58,"r":4.91,"rb":11,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203757","n":"Angelica","c":"Salon Nails","city":"Riyadh","j":39,"r":4.95,"rb":22,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203904","n":"Mitchell Ann","c":"Spa for Women","city":"Riyadh","j":71,"r":4.96,"rb":22,"t":170.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_213868","n":"Erica C Perez","c":"Spa for Women","city":"Riyadh","j":98,"r":4.87,"rb":15,"t":80.0,"cm":151.17,"np":55,"rf":0,"av":204.5},{"l":"L_191332","n":"Ravina Vergara","c":"Spa for Women","city":"Madinah","j":90,"r":4.96,"rb":8,"t":40.0,"cm":40.92,"np":0,"rf":0,"av":181.8},{"l":"L_205914","n":"Jorizel Peralta","c":"Spa for Women","city":"Riyadh","j":54,"r":4.94,"rb":21,"t":135.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_195911","n":"Lovella Shany","c":"Salon Nails","city":"Riyadh","j":91,"r":4.96,"rb":21,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_200410","n":"Jocelyn Ortillano Cahayag","c":"Salon Nails","city":"Riyadh","j":110,"r":4.94,"rb":16,"t":40.0,"cm":69.63,"np":0,"rf":0,"av":157.5},{"l":"L_198449","n":"Elaiza Valledor Toloreso","c":"Salon Nails","city":"Riyadh","j":69,"r":4.99,"rb":17,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202218","n":"Jenny Rose Elizon Nedic","c":"Spa for Women","city":"Riyadh","j":64,"r":4.99,"rb":17,"t":80.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201386","n":"Marilou Mondelo","c":"Spa for Women","city":"Riyadh","j":77,"r":4.98,"rb":17,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185114","n":"Veronikka Canciler","c":"Salon Nails","city":"Hofuf","j":85,"r":4.91,"rb":10,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207347","n":"Reynalee Robredullo","c":"Spa for Women","city":"Riyadh","j":49,"r":4.92,"rb":20,"t":80.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206181","n":"Maria Cristina Arcayos","c":"Spa for Women","city":"Dammam","j":68,"r":4.91,"rb":10,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207348","n":"Neressa Capio","c":"Spa for Women","city":"Jeddah","j":101,"r":4.87,"rb":18,"t":90.0,"cm":147.03,"np":0,"rf":0,"av":197.0},{"l":"L_191275","n":"Camille Miranda","c":"Spa for Women","city":"Riyadh","j":88,"r":4.96,"rb":16,"t":170.0,"cm":49.26,"np":0,"rf":0,"av":189.1},{"l":"L_206182","n":"Ivy Lacabas","c":"Spa for Women","city":"Jeddah","j":85,"r":4.99,"rb":13,"t":40.0,"cm":51.12,"np":0,"rf":0,"av":196.5},{"l":"L_196231","n":"Arwella Khim","c":"Salon Nails","city":"Riyadh","j":67,"r":4.95,"rb":19,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202318","n":"Mirasol Bucao","c":"Advanced Facecare","city":"Riyadh","j":48,"r":4.95,"rb":19,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_190526","n":"Maybelle Eugenio","c":"Spa for Women","city":"Riyadh","j":67,"r":4.94,"rb":19,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_195456","n":"Marie Ann Gaon","c":"Spa for Women","city":"Riyadh","j":88,"r":4.9,"rb":13,"t":310.0,"cm":87.63,"np":0,"rf":0,"av":203.6},{"l":"L_213430","n":"Divina Parta","c":"Spa for Women","city":"Riyadh","j":68,"r":5.0,"rb":10,"t":25.0,"cm":0.0,"np":95,"rf":0,"av":null},{"l":"L_206180","n":"Ma. Catherine Sasa Pagaduan","c":"Spa for Women","city":"Dammam","j":61,"r":4.88,"rb":17,"t":35.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206540","n":"Jasmin Bersabal","c":"Spa for Women","city":"Jeddah","j":58,"r":4.99,"rb":15,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206541","n":"Joana Marie Labatja","c":"Spa for Women","city":"Jeddah","j":56,"r":4.93,"rb":18,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206728","n":"Sheryl Miralles","c":"Spa for Women","city":"Riyadh","j":68,"r":5.0,"rb":15,"t":200.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_195457","n":"Melody Gutierrez","c":"Spa for Women","city":"Riyadh","j":56,"r":4.92,"rb":18,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202089","n":"Crsitine Banlat Libre","c":"Spa for Women","city":"Jeddah","j":39,"r":4.98,"rb":15,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_200412","n":"Leila Hinto","c":"Spa for Women","city":"Riyadh","j":66,"r":4.93,"rb":18,"t":90.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_213270","n":"Leosa, Jennifer Dupar","c":"Spa for Women","city":"Riyadh","j":64,"r":4.96,"rb":10,"t":80.0,"cm":0.0,"np":115,"rf":0,"av":null},{"l":"L_204015","n":"April Anne Vivero","c":"Spa for Women","city":"Riyadh","j":49,"r":4.93,"rb":17,"t":95.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202269","n":"Joanne Salome Estilles","c":"Spa for Women","city":"Riyadh","j":60,"r":4.91,"rb":17,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203169","n":"Ancherina Magarang Bidoy","c":"Advanced Facecare","city":"Riyadh","j":48,"r":4.94,"rb":17,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199427","n":"Gemmabel Ascutia","c":"Spa for Women","city":"Riyadh","j":79,"r":4.96,"rb":16,"t":35.0,"cm":12.96,"np":0,"rf":0,"av":195.3},{"l":"L_206187","n":"Maricel Benori","c":"Spa for Women","city":"Taif","j":72,"r":4.98,"rb":7,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204508","n":"Nina Marie Morem","c":"Spa for Women","city":"Riyadh","j":43,"r":5.0,"rb":14,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_184277","n":"Lorebie Belano Evangelista","c":"Spa for Women","city":"Riyadh","j":29,"r":4.97,"rb":14,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212932","n":"Rufin, Maribel","c":"Spa for Women","city":"Riyadh","j":57,"r":4.99,"rb":12,"t":45.0,"cm":0.0,"np":35,"rf":0,"av":null},{"l":"L_206186","n":"Jenevie Lungcob","c":"Spa for Women","city":"Abha","j":30,"r":4.97,"rb":3,"t":25.0,"cm":0.0,"np":70,"rf":0,"av":null},{"l":"L_206752","n":"Marjorie Dequina","c":"Salon Nails","city":"Riyadh","j":73,"r":4.9,"rb":16,"t":100.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_192699","n":"Diana Padual Villacual","c":"Spa for Women","city":"Riyadh","j":65,"r":4.94,"rb":16,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201428","n":"Myra Sibbaluca","c":"Salon Nails","city":"Riyadh","j":91,"r":4.92,"rb":16,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206543","n":"Roselyn Jurada","c":"Spa for Women","city":"Riyadh","j":60,"r":4.92,"rb":16,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_211882","n":"Lilibeth Rosendal","c":"Salon Nails","city":"Jeddah","j":86,"r":4.95,"rb":16,"t":80.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_211883","n":"Leah Grace Brozas","c":"Salon Nails","city":"Riyadh","j":89,"r":4.96,"rb":16,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212438","n":"Anna Marie Gallora","c":"Advanced Facecare","city":"Jeddah","j":41,"r":4.9,"rb":10,"t":50.0,"cm":0.0,"np":87,"rf":0,"av":null},{"l":"L_215159","n":"Edelyn Atienza Valmonte","c":"Salon Nails","city":"Riyadh","j":92,"r":5.0,"rb":9,"t":145.0,"cm":72.54,"np":0,"rf":0,"av":189.3},{"l":"L_206725","n":"Jonalyn Catipan","c":"Spa for Women","city":"Riyadh","j":59,"r":4.99,"rb":13,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204507","n":"Emelda Caballero","c":"Spa for Women","city":"Riyadh","j":41,"r":5.0,"rb":13,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208883","n":"Emily Jane Bacarisas","c":"Salon Nails","city":"Riyadh","j":86,"r":4.97,"rb":13,"t":42.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202265","n":"Geraldine Leonen","c":"Spa for Women","city":"Riyadh","j":63,"r":4.88,"rb":29,"t":120.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_198039","n":"Kacelyn Babar","c":"Salon Nails","city":"Jeddah","j":96,"r":4.95,"rb":14,"t":105.0,"cm":16.5,"np":0,"rf":0,"av":162.0},{"l":"L_198040","n":"Jackilou Soriano Maximino","c":"Salon Nails","city":"Riyadh","j":72,"r":4.91,"rb":15,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199431","n":"Marimar Casirayan","c":"Spa for Women","city":"Riyadh","j":58,"r":4.89,"rb":28,"t":150.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_205910","n":"Andrelyn Melo","c":"Advanced Facecare","city":"Dammam","j":19,"r":4.98,"rb":4,"t":0.0,"cm":0.0,"np":40,"rf":0,"av":null},{"l":"L_191841","n":"Marmie Villianueva","c":"Spa for Women","city":"Riyadh","j":60,"r":5.0,"rb":12,"t":80.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204713","n":"Ma Theresa Lomerio","c":"Spa for Women","city":"Jeddah","j":60,"r":4.98,"rb":12,"t":75.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208431","n":"Agda, Michaela Grace Pablo","c":"Advanced Facecare","city":"Riyadh","j":44,"r":4.91,"rb":14,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207032","n":"Rodalyn Queno","c":"Spa for Women","city":"Riyadh","j":76,"r":4.92,"rb":14,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206726","n":"Eva Vanessa Del Rosario","c":"Spa for Women","city":"Riyadh","j":64,"r":4.94,"rb":14,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202316","n":"Angelica Pallera","c":"Advanced Facecare","city":"Riyadh","j":63,"r":4.88,"rb":26,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185117","n":"Mary Grace Bernales","c":"Spa for Women","city":"Riyadh","j":62,"r":4.86,"rb":25,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207974","n":"Dina Lipalam","c":"Advanced Facecare","city":"Riyadh","j":23,"r":5.0,"rb":8,"t":40.0,"cm":0.0,"np":55,"rf":0,"av":null},{"l":"L_206178","n":"Dahlia Lucero","c":"Salon Nails","city":"Riyadh","j":75,"r":4.97,"rb":11,"t":43.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203849","n":"Ma. Jonna Vie Espiritu","c":"Spa for Women","city":"Riyadh","j":52,"r":5.0,"rb":11,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199430","n":"Christina Gemina","c":"Spa for Women","city":"Riyadh","j":70,"r":4.95,"rb":13,"t":115.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207244","n":"Mary Joy Bada","c":"Salon Nails","city":"Riyadh","j":85,"r":4.87,"rb":24,"t":105.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_213422","n":"Mary Grace Vitalicio","c":"Spa for Women","city":"Riyadh","j":69,"r":4.88,"rb":7,"t":75.0,"cm":0.0,"np":135,"rf":0,"av":null},{"l":"L_213682","n":"Charlotte Agustin","c":"Salon Nails","city":"Taif","j":65,"r":4.15,"rb":2,"t":10.0,"cm":0.0,"np":94,"rf":0,"av":null},{"l":"L_203166","n":"Charo Penarubia Gaspar","c":"Advanced Facecare","city":"Jeddah","j":51,"r":4.92,"rb":10,"t":80.0,"cm":0.0,"np":35,"rf":0,"av":null},{"l":"L_195913","n":"Imarie Ranan Soterno","c":"Spa for Women","city":"Riyadh","j":66,"r":4.89,"rb":23,"t":120.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207362","n":"Jennifer Cajara","c":"Spa for Women","city":"Riyadh","j":48,"r":4.95,"rb":12,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199432","n":"Rosemarie Nante","c":"Salon Nails","city":"Jeddah","j":49,"r":4.96,"rb":12,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207245","n":"Alma Malayan Nollas","c":"Spa for Women","city":"Riyadh","j":45,"r":4.99,"rb":10,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206721","n":"Huelva Espinosa","c":"Salon Nails","city":"Jeddah","j":78,"r":4.99,"rb":10,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191839","n":"Rianah Cagadas","c":"Salon Nails","city":"Riyadh","j":77,"r":4.96,"rb":12,"t":270.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207026","n":"Chona Golondrina","c":"Spa for Women","city":"Jeddah","j":59,"r":5.0,"rb":10,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204711","n":"Nariza Palayaban","c":"Spa for Women","city":"Buraydah","j":61,"r":5.0,"rb":5,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_215054","n":"Elsa Arendain","c":"Spa for Women","city":"Riyadh","j":51,"r":4.93,"rb":6,"t":30.0,"cm":0.0,"np":87,"rf":0,"av":null},{"l":"L_200952","n":"Jennifer Vendor","c":"Spa for Women","city":"Riyadh","j":71,"r":4.87,"rb":22,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207369","n":"Christine Maceda","c":"Salon Nails","city":"Riyadh","j":93,"r":4.87,"rb":22,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207033","n":"Norie Galvez","c":"Spa for Women","city":"Riyadh","j":48,"r":4.92,"rb":9,"t":25.0,"cm":0.0,"np":40,"rf":0,"av":null},{"l":"L_212440","n":"Sherilyn Mae Limos","c":"Advanced Facecare","city":"Riyadh","j":47,"r":4.91,"rb":6,"t":90.0,"cm":0.0,"np":85,"rf":0,"av":null},{"l":"L_204512","n":"Jing Kee Montecalbo","c":"Salon Nails","city":"Riyadh","j":79,"r":4.89,"rb":21,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_196605","n":"Shane Bergundo Artates","c":"Spa for Women","city":"Riyadh","j":36,"r":4.96,"rb":11,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207371","n":"Joane Monsalud","c":"Salon Nails","city":"Riyadh","j":106,"r":4.89,"rb":14,"t":75.0,"cm":52.83,"np":0,"rf":0,"av":158.1},{"l":"L_195595","n":"Maricris Baluca","c":"Spa for Women","city":"Riyadh","j":37,"r":4.98,"rb":9,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208432","n":"Yarte, Mildred Balbar","c":"Advanced Facecare","city":"Riyadh","j":60,"r":4.9,"rb":10,"t":10.0,"cm":0.0,"np":12,"rf":0,"av":null},{"l":"L_203161","n":"Melanie Balgos","c":"Spa for Women","city":"Riyadh","j":68,"r":4.89,"rb":20,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202253","n":"Maritoni Tamagos Campanero","c":"Spa for Women","city":"Riyadh","j":86,"r":4.86,"rb":14,"t":90.0,"cm":43.86,"np":0,"rf":0,"av":191.4},{"l":"L_200411","n":"Rodella Grace Base Ajesta","c":"Salon Nails","city":"Riyadh","j":91,"r":4.9,"rb":9,"t":115.0,"cm":18.18,"np":0,"rf":0,"av":171.5},{"l":"L_215224","n":"Teresa Marie Cuyo","c":"Salon Nails","city":"Riyadh","j":92,"r":4.65,"rb":0,"t":100.0,"cm":0.0,"np":152,"rf":0,"av":null},{"l":"L_191840","n":"Emerlyn M. Mejia","c":"Salon Nails","city":"Abha","j":28,"r":4.93,"rb":5,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206891","n":"Jernalyn Bermodo Colares","c":"Spa for Women","city":"Jeddah","j":58,"r":4.95,"rb":10,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206892","n":"Lovely Valdez Toledo","c":"Spa for Women","city":"Riyadh","j":42,"r":4.96,"rb":10,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_213429","n":"Juvel Mariano","c":"Spa for Women","city":"Riyadh","j":37,"r":4.89,"rb":9,"t":15.0,"cm":0.0,"np":75,"rf":0,"av":null},{"l":"L_204443","n":"Jenelyn Pena","c":"Spa for Women","city":"Riyadh","j":43,"r":4.98,"rb":8,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207368","n":"Linyi Dante","c":"Salon Nails","city":"Riyadh","j":58,"r":4.86,"rb":18,"t":95.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207943","n":"Angelica Mendioro Gose","c":"Spa for Women","city":"Riyadh","j":61,"r":4.98,"rb":8,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203610","n":"Dakan, Mary Grace Geronio","c":"Salon Nails","city":"Riyadh","j":94,"r":4.91,"rb":8,"t":63.0,"cm":21.27,"np":0,"rf":0,"av":167.1},{"l":"L_213431","n":"Marivic Barrion","c":"Spa for Women","city":"Riyadh","j":72,"r":4.73,"rb":5,"t":40.0,"cm":0.0,"np":137,"rf":0,"av":null},{"l":"L_204710","n":"Princess Ann Agustin","c":"Spa for Women","city":"Jeddah","j":56,"r":4.93,"rb":9,"t":130.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206179","n":"Angelie Fe Beniigay","c":"Salon Nails","city":"Riyadh","j":76,"r":4.96,"rb":9,"t":85.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203535","n":"Arlene Ballaran","c":"Spa for Women","city":"Riyadh","j":68,"r":4.91,"rb":9,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208295","n":"Rejin Alcantara","c":"Salon Nails","city":"Riyadh","j":83,"r":4.91,"rb":9,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_213424","n":"Aice Lobetana","c":"Spa for Women","city":"Riyadh","j":61,"r":4.91,"rb":7,"t":30.0,"cm":0.0,"np":25,"rf":0,"av":null},{"l":"L_206723","n":"Pearl Angelie Colobong","c":"Spa for Women","city":"Jeddah","j":39,"r":4.97,"rb":7,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202155","n":"Lascano Erica Palisoc","c":"Spa for Women","city":"Riyadh","j":58,"r":5.0,"rb":7,"t":100.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207366","n":"Gemma Fareed","c":"Salon Nails","city":"Riyadh","j":86,"r":4.98,"rb":7,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212619","n":"Marisa Biala Estrada","c":"Spa for Women","city":"Riyadh","j":80,"r":4.91,"rb":8,"t":200.0,"cm":3.69,"np":0,"rf":0,"av":189.0},{"l":"L_206070","n":"Michelle Marimon Alba","c":"Spa for Women","city":"Riyadh","j":64,"r":4.92,"rb":8,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207025","n":"Mary Jane Valentino","c":"Spa for Women","city":"Riyadh","j":46,"r":4.87,"rb":15,"t":80.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212441","n":"Rochelle Alsid","c":"Hair for Women","city":"Riyadh","j":94,"r":4.88,"rb":15,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207674","n":"Mariel Lastiere Sales","c":"Advanced Facecare","city":"Riyadh","j":66,"r":4.94,"rb":8,"t":90.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206720","n":"Arlene Legaspi","c":"Salon Nails","city":"Jeddah","j":56,"r":4.92,"rb":8,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202217","n":"Sarah De Asis Bravo","c":"Spa for Women","city":"Riyadh","j":60,"r":4.86,"rb":15,"t":100.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203905","n":"Mary Rose Secreto","c":"Spa for Women","city":"Riyadh","j":71,"r":4.87,"rb":15,"t":35.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203532","n":"Vanessa Waga","c":"Salon Nails","city":"Riyadh","j":82,"r":4.95,"rb":8,"t":105.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203758","n":"Teresa Estrellado","c":"Advanced Facecare","city":"Dammam","j":17,"r":4.92,"rb":2,"t":0.0,"cm":0.0,"np":25,"rf":0,"av":null},{"l":"L_215056","n":"Marianne Balaso","c":"Spa for Women","city":"Riyadh","j":53,"r":4.69,"rb":7,"t":60.0,"cm":0.0,"np":109,"rf":0,"av":null},{"l":"L_201691","n":"Miricris Ugdiman","c":"Salon Nails","city":"Riyadh","j":57,"r":5.0,"rb":6,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208083","n":"Fidela Menoza","c":"Spa for Women","city":"Riyadh","j":52,"r":4.96,"rb":7,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204515","n":"Sherlyn E Macasinag","c":"Advanced Facecare","city":"Riyadh","j":51,"r":4.9,"rb":7,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207029","n":"Kimberly Mancia","c":"Spa for Women","city":"Riyadh","j":64,"r":4.88,"rb":13,"t":80.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206544","n":"Jovelyn Viloria","c":"Spa for Women","city":"Riyadh","j":60,"r":4.86,"rb":12,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_215336","n":"Kristine Borongan","c":"Hair for Women","city":"Riyadh","j":54,"r":4.73,"rb":3,"t":65.0,"cm":0.0,"np":95,"rf":0,"av":null},{"l":"L_216316","n":"Angelyn Cabuang","c":"Salon Nails","city":"Riyadh","j":70,"r":4.57,"rb":2,"t":10.0,"cm":0.0,"np":94,"rf":0,"av":null},{"l":"L_216451","n":"Melanie Dagdag","c":"Advanced Facecare","city":"Riyadh","j":56,"r":4.81,"rb":1,"t":75.0,"cm":0.0,"np":92,"rf":0,"av":null},{"l":"L_217117","n":"Cristine Demerin","c":"Salon Nails","city":"Riyadh","j":45,"r":5.0,"rb":2,"t":0.0,"cm":0.0,"np":55,"rf":0,"av":null},{"l":"L_191272","n":"Aisa Pupos","c":"Spa for Women","city":"Riyadh","j":34,"r":4.92,"rb":6,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207367","n":"Joebeline","c":"Salon Nails","city":"Jeddah","j":61,"r":4.91,"rb":6,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202392","n":"Arriannie Bangloy","c":"Spa for Women","city":"Riyadh","j":37,"r":4.91,"rb":6,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203164","n":"Gerlie Isig Baring","c":"Advanced Facecare","city":"Buraydah","j":13,"r":4.84,"rb":0,"t":0.0,"cm":0.0,"np":45,"rf":0,"av":null},{"l":"L_191867","n":"Myrabel Lauz","c":"Spa for Women","city":"Abha","j":34,"r":4.93,"rb":3,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_205911","n":"Rica Jurada","c":"Advanced Facecare","city":"Riyadh","j":49,"r":4.85,"rb":11,"t":105.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185379","n":"Aia Puracan","c":"Spa for Women","city":"Jeddah","j":57,"r":4.89,"rb":11,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199426","n":"Larla Trillana","c":"Advanced Facecare","city":"Riyadh","j":51,"r":4.89,"rb":11,"t":85.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_213427","n":"Regine Bendigurin","c":"Spa for Women","city":"Riyadh","j":64,"r":4.9,"rb":3,"t":55.0,"cm":0.0,"np":37,"rf":0,"av":null},{"l":"L_203534","n":"Dianne Camille Nuñez Bartolome","c":"Advanced Facecare","city":"Jeddah","j":20,"r":5.0,"rb":3,"t":0.0,"cm":0.0,"np":25,"rf":0,"av":null},{"l":"L_216698","n":"Marilou Tubigon","c":"Spa for Women","city":"Riyadh","j":61,"r":4.7,"rb":3,"t":100.0,"cm":0.0,"np":75,"rf":0,"av":null},{"l":"L_212443","n":"Mary Grace Laquinario","c":"Salon Nails","city":"Madinah","j":58,"r":4.54,"rb":3,"t":20.0,"cm":0.0,"np":37,"rf":0,"av":null},{"l":"L_205510","n":"Judy Diaros","c":"Spa for Women","city":"Riyadh","j":49,"r":4.88,"rb":9,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207024","n":"Rhoda Bondad","c":"Spa for Women","city":"Riyadh","j":65,"r":4.89,"rb":9,"t":91.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207363","n":"Dayline Escultor","c":"Spa for Women","city":"Jeddah","j":36,"r":5.0,"rb":4,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199280","n":"Arian Mier","c":"Spa for Women","city":"Jeddah","j":59,"r":4.89,"rb":9,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203170","n":"Melanie Enero Corig","c":"Advanced Facecare","city":"Hofuf","j":20,"r":4.9,"rb":1,"t":0.0,"cm":0.0,"np":20,"rf":0,"av":null},{"l":"L_213425","n":"Sherlene Bañadera","c":"Spa for Women","city":"Riyadh","j":35,"r":4.83,"rb":1,"t":20.0,"cm":0.0,"np":67,"rf":0,"av":null},{"l":"L_ 212623","n":"Cindy Rivera","c":"Spa for Women","city":"Jeddah","j":68,"r":4.83,"rb":9,"t":0.0,"cm":0.0,"np":65,"rf":0,"av":null},{"l":"L_202319","n":"Marimel Retorion","c":"Advanced Facecare","city":"Riyadh","j":15,"r":4.92,"rb":1,"t":15.0,"cm":0.0,"np":50,"rf":0,"av":null},{"l":"L_207588","n":"Kyla Marie Perasol","c":"Spa for Women","city":"Riyadh","j":58,"r":4.85,"rb":8,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206893","n":"Richelle Tamio Niegas","c":"Spa for Women","city":"Riyadh","j":71,"r":4.85,"rb":8,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202388","n":"Marjorie Maceda","c":"Salon Nails","city":"Riyadh","j":90,"r":4.92,"rb":4,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199425","n":"Mary Joy Barrun","c":"Spa for Women","city":"Riyadh","j":24,"r":4.9,"rb":4,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207028","n":"Geneva Fabros","c":"Spa for Women","city":"Riyadh","j":18,"r":4.92,"rb":4,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207027","n":"Zarah Ilagan","c":"Spa for Women","city":"Riyadh","j":29,"r":4.96,"rb":4,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_200953","n":"Jenny Suratos","c":"Spa for Women","city":"Riyadh","j":56,"r":4.96,"rb":4,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_215763","n":"Roxanne Bebida","c":"Hair for Women","city":"Riyadh","j":59,"r":4.83,"rb":4,"t":25.0,"cm":0.0,"np":57,"rf":0,"av":null},{"l":"L_207364","n":"Marenisa Calipayan","c":"Spa for Women","city":"Riyadh","j":18,"r":4.89,"rb":7,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_215055","n":"Lalaine Brigole","c":"Spa for Women","city":"Riyadh","j":53,"r":4.74,"rb":3,"t":5.0,"cm":0.0,"np":55,"rf":0,"av":null},{"l":"L_212450","n":"Jocelyn Morales","c":"Advanced Facecare","city":"Riyadh","j":35,"r":4.17,"rb":1,"t":15.0,"cm":0.0,"np":51,"rf":0,"av":null},{"l":"L_208403","n":"Ellen Joy (gomez) Ayala","c":"Spa for Women","city":"Riyadh","j":51,"r":4.88,"rb":6,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207373","n":"Maria Luna Adamson","c":"Salon Nails","city":"Jeddah","j":68,"r":4.88,"rb":6,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203903","n":"Lynrt Lane Favian","c":"Spa for Women","city":"Jeddah","j":40,"r":4.92,"rb":3,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_217410","n":"Analou Ybanez","c":"Hair for Women","city":"Riyadh","j":45,"r":4.23,"rb":0,"t":80.0,"cm":0.0,"np":41,"rf":0,"av":null},{"l":"L_212624","n":"Maribel Lagarteja","c":"Spa for Women","city":"Jeddah","j":54,"r":4.89,"rb":5,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206754","n":"Analiza Baldedara","c":"Salon Nails","city":"Riyadh","j":79,"r":4.87,"rb":5,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202317","n":"Wendy Lopez","c":"Advanced Facecare","city":"Riyadh","j":32,"r":4.64,"rb":3,"t":25.0,"cm":0.0,"np":39,"rf":0,"av":null},{"l":"L_203160","n":"Rodeliza Ruiz","c":"Spa for Women","city":"Riyadh","j":63,"r":4.89,"rb":4,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203167","n":"Merrie Frecious Cadalin Dela Paz","c":"Salon Nails","city":"Riyadh","j":66,"r":4.89,"rb":4,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206176","n":"Sherly De Torres","c":"Advanced Facecare","city":"Riyadh","j":15,"r":4.7,"rb":1,"t":15.0,"cm":0.0,"np":30,"rf":0,"av":null},{"l":"L_212622","n":"Bianca Mel Fernandez Obniala","c":"Advanced Facecare","city":"Jeddah","j":26,"r":3.77,"rb":5,"t":110.0,"cm":0.0,"np":29,"rf":0,"av":null},{"l":"L_212439","n":"Marissa Concepcion","c":"Advanced Facecare","city":"Jeddah","j":21,"r":4.65,"rb":5,"t":0.0,"cm":0.0,"np":27,"rf":0,"av":null},{"l":"L_213444","n":"Laine Tunzon","c":"Hair for Women","city":"Riyadh","j":28,"r":4.21,"rb":3,"t":75.0,"cm":0.0,"np":26,"rf":0,"av":null},{"l":"L_213544","n":"Fe Quintero","c":"Salon Nails","city":"Riyadh","j":113,"r":4.58,"rb":8,"t":146.0,"cm":0.0,"np":25,"rf":0,"av":null},{"l":"L_198448","n":"Anthonette Carballo","c":"Salon Nails","city":"Jeddah","j":60,"r":4.89,"rb":3,"t":95.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207030","n":"Charmine Dayondon","c":"Spa for Women","city":"Riyadh","j":16,"r":4.88,"rb":2,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206071","n":"Grace Ann Librea","c":"Spa for Women","city":"Jeddah","j":23,"r":4.58,"rb":4,"t":10.0,"cm":0.0,"np":10,"rf":0,"av":null},{"l":"‎L_212442","n":"Rose Ann Mindoro","c":"Advanced Facecare","city":"Riyadh","j":75,"r":4.63,"rb":6,"t":80.0,"cm":0.0,"np":10,"rf":0,"av":null},{"l":"L_212620","n":"Mary Ann Caranto Volante","c":"Spa for Women","city":"Riyadh","j":56,"r":4.66,"rb":3,"t":35.0,"cm":0.0,"np":5,"rf":0,"av":null},{"l":"L_165035","n":"Jocelyn Adot Jimboy","c":"Spa for Women","city":"Jeddah","j":0,"r":4.96,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_183404","n":"Jean Duya Cabarle","c":"Salon Nails","city":"Riyadh","j":85,"r":4.8,"rb":39,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191866","n":"Kaira Mel Taay","c":"Spa for Women","city":"Riyadh","j":68,"r":4.84,"rb":29,"t":75.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199429","n":"Jessa Sinampaga","c":"Spa for Women","city":"Buraydah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212446","n":"Rhoujane Sumpay","c":"Salon Nails","city":"Riyadh","j":55,"r":4.82,"rb":1,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202315","n":"Erica Ancero","c":"Advanced Facecare","city":"Riyadh","j":56,"r":4.72,"rb":10,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_175239","n":"Ma. Suzette S. Banco","c":"Spa for Women","city":"Riyadh","j":0,"r":4.98,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_165036","n":"Ana Flor A. Delos Santos","c":"Spa for Women","city":"Jeddah","j":0,"r":4.83,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191269","n":"Valerie Agustin","c":"Spa for Women","city":"Riyadh","j":98,"r":4.84,"rb":29,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206861","n":"Laila Villejo","c":"Spa for Women","city":"Buraydah","j":10,"r":0,"rb":2,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_216699","n":"Shiena Sobria","c":"Salon Nails","city":"Riyadh","j":65,"r":4.76,"rb":15,"t":40.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191868","n":"Ma.charlot Adorna Ortaliz","c":"Spa for Women","city":"Dammam","j":62,"r":4.7,"rb":15,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_196604","n":"Vanessa Revereal","c":"Spa for Women","city":"Riyadh","j":70,"r":4.82,"rb":20,"t":80.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203163","n":"Ruth Lastimosa","c":"Spa for Women","city":"Riyadh","j":67,"r":4.72,"rb":13,"t":156.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206890","n":"Grethel Cabil Sabejon","c":"Spa for Women","city":"Riyadh","j":41,"r":4.76,"rb":5,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206724","n":"Glenn Rose Cabaluna","c":"Spa for Women","city":"Jeddah","j":41,"r":4.79,"rb":11,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206889","n":"Ma Shiena Geroy Lace","c":"Spa for Women","city":"Jeddah","j":63,"r":4.74,"rb":16,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_160363","n":"Mary Grace Juangco Lamoc","c":"Spa for Women","city":"Jeddah","j":0,"r":4.8,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_189414","n":"Harmlyn Galabo","c":"Salon Nails","city":"Jeddah","j":80,"r":4.72,"rb":27,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_189416","n":"Elsa Sepe","c":"Salon Nails","city":"Riyadh","j":79,"r":4.73,"rb":7,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_165483","n":"Alliaza","c":"Salon Nails","city":"Jeddah","j":0,"r":4.78,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_205915","n":"Ana Kriza Robles","c":"Spa for Women","city":"Riyadh","j":66,"r":4.75,"rb":21,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185259","n":"Rochelle Aragon","c":"Spa for Women","city":"Jeddah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_189415","n":"Esthelyn Jane Baay","c":"Salon Nails","city":"Jeddah","j":77,"r":4.77,"rb":7,"t":95.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_164856","n":"Jeserna Elican Rivas","c":"Salon Nails","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203265","n":"Sophie A. Velarde","c":"Spa for Women","city":"Riyadh","j":57,"r":4.78,"rb":7,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_159780","n":"Baby Jane","c":"Salon Nails","city":"Hofuf","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206753","n":"Charina Mae Balais","c":"Salon Nails","city":"Riyadh","j":99,"r":4.66,"rb":18,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203162","n":"Roma Kristina Lope","c":"Spa for Women","city":"Riyadh","j":53,"r":4.78,"rb":4,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_164313","n":"Judith M Tradio","c":"Salon Nails","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_211881","n":"Geraldine Matias","c":"Salon Nails","city":"Riyadh","j":94,"r":4.74,"rb":7,"t":35.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204712","n":"Marife Verano Acebuche","c":"Spa for Women","city":"Jeddah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207370","n":"Kimberly Tizon","c":"Salon Nails","city":"Riyadh","j":74,"r":4.82,"rb":18,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_171463","n":"Rachel Jataas","c":"Salon Nails","city":"Riyadh","j":0,"r":4.87,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207031","n":"May Ann Corpuz","c":"Spa for Women","city":"Riyadh","j":42,"r":4.63,"rb":6,"t":110.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206727","n":"Maria Karla Arajuez","c":"Spa for Women","city":"Riyadh","j":64,"r":4.68,"rb":7,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_166297","n":"Merlyn Acoba Hinampas","c":"Spa for Women","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_160938","n":"Maricar","c":"Salon Nails","city":"Jeddah","j":0,"r":4.93,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202391","n":"Jennyfe Brazil","c":"Spa for Women","city":"Riyadh","j":92,"r":4.76,"rb":10,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_175176","n":"Jemar Abanto Barrera","c":"Spa for Women","city":"Riyadh","j":0,"r":4.89,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203303","n":"Janine Marie Liwanag Edejer","c":"Salon Nails","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207911","n":"Marion Were Odhiambo","c":"Salon Nails","city":"Jeddah","j":0,"r":4.53,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204308","n":"Jovelyn Berras","c":"Spa for Women","city":"Dammam","j":55,"r":4.71,"rb":3,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208360","n":"Shiela V Galvez","c":"Spa for Women","city":"Riyadh","j":88,"r":4.81,"rb":12,"t":75.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185064","n":"Princess Arellano","c":"Spa for Women","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_166296","n":"Marilou Galang","c":"Spa for Women","city":"Hofuf","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_184278","n":"Analyn Pacia","c":"Salon Nails","city":"Buraydah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208882","n":"Juvylene Nacion","c":"Salon Nails","city":"Buraydah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_174217","n":"Gina Morandarte Adorna","c":"Salon Nails","city":"Dammam","j":0,"r":4.94,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208296","n":"Marichue Saludo","c":"Salon Nails","city":"Riyadh","j":80,"r":4.66,"rb":10,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208298","n":"Liezl Bonilla Tubia","c":"Spa for Women","city":"Riyadh","j":44,"r":4.74,"rb":3,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206539","n":"Amongol, Leizel Adeza","c":"Spa for Women","city":"Jeddah","j":35,"r":4.74,"rb":10,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185116","n":"Elena Pangan","c":"Spa for Women","city":"Riyadh","j":87,"r":4.83,"rb":9,"t":90.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201811","n":"Eliza Cawaling","c":"Salon Nails","city":"Buraydah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202090","n":"Rea Pacampara","c":"Spa for Women","city":"Riyadh","j":72,"r":4.8,"rb":4,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202157","n":"Rea Poliquit Gonzavo","c":"Spa for Women","city":"Jeddah","j":55,"r":4.82,"rb":9,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202390","n":"Cherry May Españo","c":"Spa for Women","city":"Riyadh","j":72,"r":4.71,"rb":5,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_200899","n":"Mariel Daisog","c":"Salon Nails","city":"Hofuf","j":27,"r":4.83,"rb":3,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204309","n":"Gladys Joy Casero","c":"Spa for Women","city":"Buraydah","j":62,"r":4.84,"rb":12,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208402","n":"Mary Jane Ugdiman","c":"Spa for Women","city":"Riyadh","j":46,"r":4.81,"rb":11,"t":75.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207912","n":"Caren Kavuran Ochwaya","c":"Salon Nails","city":"Jeddah","j":73,"r":4.6,"rb":1,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191844","n":"Lovely Salvador","c":"Spa for Women","city":"Riyadh","j":51,"r":4.82,"rb":3,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_194619","n":"Gimalyn Abubo","c":"Salon Nails","city":"Jeddah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202266","n":"Jimma Bacani","c":"Salon Nails","city":"Riyadh","j":97,"r":4.83,"rb":26,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201387","n":"Mary Ann C. Pagaduan","c":"Spa for Women","city":"Jeddah","j":0,"r":4.88,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201385","n":"Frixy Sambrano","c":"Spa for Women","city":"Riyadh","j":64,"r":4.83,"rb":6,"t":85.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212445","n":"Mary Jane Oronos","c":"Salon Nails","city":"Riyadh","j":45,"r":4.74,"rb":2,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203611","n":"Muega, Eloisa Masbate","c":"Salon Nails","city":"Riyadh","j":0,"r":4.43,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_168093","n":"Jayanne Dagohoy","c":"Salon Nails","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201388","n":"Genelyn B. Ploicarpio","c":"Spa for Women","city":"Riyadh","j":62,"r":4.84,"rb":10,"t":50.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_204703","n":"Marifi Tropico","c":"Spa for Women","city":"Riyadh","j":64,"r":4.72,"rb":9,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201594","n":"Marvi Escosura Alinday","c":"Salon Nails","city":"Riyadh","j":106,"r":4.79,"rb":10,"t":55.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_218079","n":"Olivia Alcantara","c":"Salon Nails","city":"Riyadh","j":4,"r":0.0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212448","n":"Krisna Pangilinan","c":"Salon Nails","city":"Jeddah","j":53,"r":4.78,"rb":4,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202320","n":"Bhrisalene Rivera","c":"Salon Nails","city":"Riyadh","j":67,"r":4.79,"rb":17,"t":60.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_211836","n":"Ginalyn Salazar","c":"Spa for Women","city":"Jeddah","j":103,"r":4.83,"rb":10,"t":135.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_166295","n":"Reynalyn Pascual","c":"Salon Nails","city":"Jeddah","j":0,"r":4.73,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202252","n":"Mariane Campanero","c":"Spa for Women","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203531","n":"Reah Amor Pagada","c":"Salon Nails","city":"Riyadh","j":110,"r":4.47,"rb":10,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_206185","n":"Mary Rose Trinidad","c":"Spa for Women","city":"Jeddah","j":34,"r":4.65,"rb":9,"t":170.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"nan","n":"Sami - Test","c":"Salon Nails","city":"Hofuf","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_196475","n":"Jessica Mendoza","c":"Salon Nails","city":"Riyadh","j":60,"r":4.14,"rb":1,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207891","n":"Joyce Wanjiku Mwangi","c":"Salon Nails","city":"Jeddah","j":48,"r":4.75,"rb":2,"t":105.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_195593","n":"Geraldine Cutamora","c":"Spa for Women","city":"Jeddah","j":0,"r":5.0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_215158","n":"Rowena","c":"Salon Nails","city":"Riyadh","j":75,"r":4.8,"rb":8,"t":25.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_201816","n":"Estela Argonista","c":"Salon Nails","city":"Riyadh","j":79,"r":4.8,"rb":10,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208884","n":"Jorelyn Cabrellos","c":"Salon Nails","city":"Jeddah","j":81,"r":3.81,"rb":8,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_159781","n":"Rochel","c":"Salon Nails","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207372","n":"Maica Lorein Garcia","c":"Salon Nails","city":"Buraydah","j":30,"r":0,"rb":7,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_208885","n":"Karen Castro","c":"Salon Nails","city":"Riyadh","j":73,"r":4.76,"rb":8,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_172300","n":"Mary An Galadlas Tambus","c":"Spa for Women","city":"Riyadh","j":0,"r":4.99,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_164312","n":"Jojet","c":"Salon Nails","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191274","n":"Jovy Grace Azote","c":"Spa for Women","city":"Buraydah","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212449","n":"Aralyn Baltazar","c":"Salon Nails","city":"Riyadh","j":93,"r":4.54,"rb":4,"t":45.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_199281","n":"Jeselyn Dalagon","c":"Spa for Women","city":"Riyadh","j":70,"r":4.67,"rb":19,"t":95.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_185118","n":"Maricris Pulido","c":"Spa for Women","city":"Buraydah","j":22,"r":0,"rb":3,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_191356","n":"Vera Manluza","c":"Salon Nails","city":"Dammam","j":80,"r":4.8,"rb":10,"t":15.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_202088","n":"Janice Brigondot","c":"Spa for Women","city":"Jeddah","j":51,"r":4.81,"rb":12,"t":10.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_198451","n":"Norelyn Santiago Guadalupe","c":"Salon Nails","city":"Jeddah","j":66,"r":4.8,"rb":16,"t":30.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_212444","n":"Mercidita Base","c":"Salon Nails","city":"Dammam","j":66,"r":4.61,"rb":4,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_210977","n":"Christine Padayao","c":"Hair for Women","city":"Riyadh","j":70,"r":4.81,"rb":7,"t":65.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_198699","n":"Lucilyn Ando","c":"Spa for Women","city":"Riyadh","j":69,"r":4.84,"rb":9,"t":20.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_207374","n":"Cyrill Bayani","c":"Salon Nails","city":"Riyadh","j":71,"r":4.71,"rb":4,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_203530","n":"Wilma Tolentino Basa","c":"Salon Nails","city":"Riyadh","j":23,"r":4.53,"rb":1,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_165037","n":"Lea Cleoffe","c":"Spa for Women","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_198700","n":"Karen Casil","c":"Spa for Women","city":"Jeddah","j":55,"r":4.83,"rb":22,"t":70.0,"cm":0.0,"np":0,"rf":0,"av":null},{"l":"L_165240","n":"Rachel Dela Cruz","c":"Spa for Women","city":"Riyadh","j":0,"r":0,"rb":0,"t":0.0,"cm":0.0,"np":0,"rf":0,"av":null}];
+
+const CATS = ["Salon Nails","Spa for Women","Advanced Facecare","Hair for Women"];
+const CATVAL = {"Salon Nails":165,"Spa for Women":195,"Advanced Facecare":220,"Hair for Women":240};
+const R = {tier1:18,tier2:15,tier3:8, commRate:3,commThreshold:15000,minRating:4.85,
+  shareValue:50, npFive:5,npDeduct:3,npLimit:150, referralValue:500, shadowValue:50, targetRebookPct:40};
+
+const SW = [
+  {k:"rebooking",label:"Rebooking",color:"#B4285E",note:"jobs × rating tier"},
+  {k:"commission",label:"Commission",color:"#6D2E5B",note:"3% above 15k"},
+  {k:"newpro",label:"New pro",color:"#E8739E",note:"5 / −3 · first 150 jobs"},
+  {k:"share",label:"Share profile",color:"#C8A24B",note:"50 · per conversion"},
+  {k:"referral",label:"Referral",color:"#B07C2E",note:"500 · per hire"},
+  {k:"shadow",label:"Shadowing",color:"#7BA88F",note:"50 · mentee"},
+  {k:"tips",label:"Tips",color:"#6E8FB8",note:"100%"},
+  {k:"base",label:"Base pay",color:"#8A7580",note:"as entered"},
+];
+
+const S = {category:"Salon Nails",jobs:90,rating:4.95,rebookPct:25,active30:true,avg:165,tips:60,
+  newpro:false,fivestar:0,badr:0,shares:0,referrals:0,shadow:false,base:0};
+const IDX = {}; PROVIDERS.forEach(p=>IDX[p.l.toUpperCase().replace(/\s+/g,"")]=p);
+
+const fmt=n=>Math.round(n).toLocaleString("en-US");
+const tierRate=r=>r>=4.97?R.tier1:r>=4.9?R.tier2:r>=4.85?R.tier3:0;
+const tierLabel=r=>r>=4.97?"Top tier":r>=4.9?"High tier":r>=4.85?"Standard tier":"Below threshold";
+const pillBg=r=>r>=4.97?"#F7E4EC":r>=4.9?"#F3E7F0":r>=4.85?"#FBEFE0":"#F6E4E4";
+const pillFg=r=>r>=4.97?"#8A1D45":r>=4.9?"#5A2650":r>=4.85?"#8A5E17":"#9A2A2A";
+function nextTier(r){
+  if(r>=4.97)return null;
+  if(r>=4.9)return{at:4.97,label:"Top tier · SAR 18 / rebooking"};
+  if(r>=4.85)return{at:4.9,label:"High tier · SAR 15 / rebooking"};
+  return{at:4.85,label:"Standard tier · SAR 8 / rebooking"};
+}
+
+function compute(opts){
+  opts=opts||{};
+  const rating=opts.max?5.0:S.rating;
+  const rebookPct=opts.max?R.targetRebookPct:S.rebookPct;
+  const active=opts.max?true:S.active30;
+  const okRating=rating>=R.minRating;
+  const rebookCount=Math.round(S.jobs*rebookPct/100);
+  const rebooking=active?rebookCount*tierRate(rating):0;
+  const revenue=S.jobs*S.avg;
+  const commission=okRating?(R.commRate/100)*Math.max(0,revenue-R.commThreshold):0;
+  let newpro=0;
+  if(S.newpro){
+    const five=opts.max?S.jobs:S.fivestar;
+    const bad=opts.max?0:S.badr;
+    newpro=Math.max(0, R.npFive*five - R.npDeduct*bad);
+  }
+  const share=okRating?S.shares*R.shareValue:0;
+  const referral=S.referrals*R.referralValue;
+  const shadow=(S.shadow&&okRating)?R.shadowValue:0;
+  const tips=S.tips;
+  const incentives=rebooking+commission+newpro+share+referral+shadow+tips;
+  const total=incentives+S.base;
+  return{rebooking,commission,newpro,share,referral,shadow,tips,base:S.base,incentives,total,rebookCount,revenue,okRating};
+}
+
+function setBg(el){const mn=+el.min,mx=+el.max,v=+el.value,p=((v-mn)/(mx-mn))*100;
+  el.style.background=`linear-gradient(90deg,#B4285E 0%,#B4285E ${p}%,#EADCD8 ${p}%,#EADCD8 100%)`;}
+
+function render(){
+  document.getElementById("jobsOut").textContent=S.jobs;
+  document.getElementById("ratingOut").textContent=S.rating.toFixed(2)+" ★";
+  const now=compute();
+  document.getElementById("rebookOut").textContent=S.rebookPct+"%  ("+now.rebookCount+" jobs)";
+  ["jobs","rating","rebook"].forEach(id=>setBg(document.getElementById(id)));
+
+  const tp=document.getElementById("tierpill");
+  tp.textContent=tierLabel(S.rating)+" · "+(tierRate(S.rating)?("SAR "+tierRate(S.rating)+" / rebooking"):"no rebooking");
+  tp.style.background=pillBg(S.rating);tp.style.color=pillFg(S.rating);
+  const nt=nextTier(S.rating);
+  document.getElementById("tierhint").textContent=nt?("Reach "+nt.at.toFixed(2)+"★ → "+nt.label):"";
+
+  let rn;
+  if(!now.okRating) rn="Rating below 4.85 — no commission, rebooking, share or shadowing this cycle.";
+  else rn="GMV ≈ "+S.jobs+" × SAR "+fmt(S.avg)+" = SAR "+fmt(now.revenue)+(now.revenue>R.commThreshold?"  → 3% on SAR "+fmt(now.revenue-R.commThreshold)+" above 15,000":"  → below 15,000, no commission yet");
+  document.getElementById("revnote").textContent=rn;
+
+  document.getElementById("npRow").style.display=S.newpro?"grid":"none";
+  const npEl=document.getElementById("npOut");
+  if(S.newpro){npEl.style.display="block";npEl.textContent="New pro incentive = 5 × "+S.fivestar+" − 3 × "+S.badr+" = SAR "+fmt(now.newpro)+" (first 150 jobs only)";}
+  else npEl.style.display="none";
+
+  document.getElementById("totalNum").textContent=fmt(now.total);
+  document.getElementById("totalSub").textContent=fmt(now.incentives)+" incentives"+(S.base?" · "+fmt(S.base)+" base":"")+" · "+S.jobs+" jobs";
+
+  const maxc=Math.max.apply(null,SW.map(s=>now[s.k]).concat([1]));
+  const rows=SW.filter(s=>now[s.k]>0);
+  document.getElementById("breakdown").innerHTML=rows.length?rows.map(s=>
+    `<div><div class="btop"><span class="bname"><span class="swatch" style="background:${s.color}"></span>${s.label}<span class="bnote">${s.note}</span></span><span class="bval">SAR ${fmt(now[s.k])}</span></div><div class="track"><div class="fill" style="width:${(now[s.k]/maxc)*100}%;background:${s.color}"></div></div></div>`
+  ).join(""):`<div class="empty-break">No incentives at these inputs yet — add jobs, tips, or lift your rating to 4.85+.</div>`;
+
+  const mx=compute({max:true});
+  const gap=Math.max(0,mx.total-now.total);
+  document.getElementById("potJobs").textContent=S.jobs;
+  document.getElementById("potNum").textContent=fmt(mx.total);
+  document.getElementById("potMsg").innerHTML=gap>0
+    ?`Lift your rating to 5.00★ and rebook ${R.targetRebookPct}% of jobs to unlock <b>+SAR ${fmt(gap)}</b>.`
+    :`You’re at the ceiling for this job count — more jobs is the next lever.`;
+
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c.dataset.cat===S.category));
+}
+
+function syncInputs(){
+  document.getElementById("jobs").value=S.jobs;
+  document.getElementById("rating").value=S.rating;
+  document.getElementById("rebook").value=S.rebookPct;
+  document.getElementById("active30").checked=S.active30;
+  document.getElementById("avg").value=S.avg;
+  document.getElementById("tips").value=S.tips;
+  document.getElementById("newpro").checked=S.newpro;
+  document.getElementById("fivestar").value=S.fivestar;
+  document.getElementById("badr").value=S.badr;
+  document.getElementById("shares").value=S.shares;
+  document.getElementById("referrals").value=S.referrals;
+  document.getElementById("shadow").checked=S.shadow;
+  document.getElementById("base").value=S.base;
+}
+
+document.getElementById("chips").innerHTML=CATS.map(c=>`<button class="chip" data-cat="${c}">${c}</button>`).join("");
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{S.category=c.dataset.cat;if(!S._locked)S.avg=CATVAL[c.dataset.cat];syncInputs();render();});
+
+const bindR=(id,key,fn)=>{const el=document.getElementById(id);el.oninput=()=>{S[key]=fn(el.value);render();};};
+bindR("jobs","jobs",v=>+v); bindR("rating","rating",v=>+v); bindR("rebook","rebookPct",v=>+v);
+const bindN=(id,key,mx)=>{const el=document.getElementById(id);el.oninput=()=>{S[key]=Math.max(0,Math.min(mx===undefined?1e9:mx,+el.value||0));render();};};
+bindN("tips","tips"); bindN("fivestar","fivestar",150); bindN("badr","badr",150);
+bindN("shares","shares",200); bindN("referrals","referrals",50); bindN("base","base");
+document.getElementById("avg").oninput=()=>{S._locked=true;S.avg=Math.max(0,+document.getElementById("avg").value||0);render();};
+document.getElementById("active30").onchange=e=>{S.active30=e.target.checked;render();};
+document.getElementById("newpro").onchange=e=>{S.newpro=e.target.checked;render();};
+document.getElementById("shadow").onchange=e=>{S.shadow=e.target.checked;render();};
+
+function toggle(btn,body,ct){const b=document.getElementById(btn),bd=document.getElementById(body),c=document.getElementById(ct);
+  b.onclick=()=>{bd.classList.toggle("open");c.classList.toggle("open");};}
+toggle("moreBtn","moreBody","moreCt"); toggle("howBtn","howBody","howCaret"); toggle("useBtn","useBody","useCaret");
+function openMore(){document.getElementById("moreBody").classList.add("open");document.getElementById("moreCt").classList.add("open");}
+
+function reveal(){document.getElementById("empty").style.display="none";document.getElementById("app").style.display="block";render();}
+
+function doLookup(){
+  const raw=document.getElementById("lno").value.trim();
+  const b=document.getElementById("banner");
+  if(!raw){b.className="banner err";b.textContent="Enter your L-number to continue.";return;}
+  let key=raw.toUpperCase().replace(/\s+/g,"");
+  if(key[0]!=="L")key="L_"+key; else if(key.slice(0,2)!=="L_")key="L_"+key.slice(1);
+  const p=IDX[key];
+  if(!p){b.className="banner err";b.innerHTML="No match for <b>"+raw+"</b>. Check your L-number and try again.";return;}
+  S.category=CATS.includes(p.c)?p.c:"Salon Nails";
+  S.jobs=p.j; S.rating=p.r; S.rebookPct=p.j>0?Math.min(60,Math.round(p.rb/p.j*100)):0; S.active30=true;
+  S.tips=Math.round(p.t);
+  S.avg=p.av!=null?p.av:Math.min(CATVAL[S.category]||180,p.j>0?R.commThreshold/p.j:180);
+  S.newpro=p.np>0; S.fivestar=p.np>0?Math.round(p.np/R.npFive):0; S.badr=0;
+  S.shares=0; S.referrals=Math.round(p.rf/R.referralValue); S.shadow=false; S.base=0;
+  S._locked=true;
+  syncInputs(); reveal();
+  if(S.newpro||S.referrals>0)openMore();
+  const who=SHOW_NAMES?("<b>"+p.n+"</b> · "):"";
+  b.className="banner ok";
+  b.innerHTML=who+p.c+" · "+p.city+" — your activity is prefilled below. Adjust anything to explore.";
+}
+document.getElementById("findBtn").onclick=doLookup;
+document.getElementById("lno").addEventListener("keydown",e=>{if(e.key==="Enter")doLookup();});
+document.getElementById("clearBtn").onclick=()=>{
+  Object.assign(S,{category:"Salon Nails",jobs:90,rating:4.95,rebookPct:25,active30:true,avg:165,tips:60,
+    newpro:false,fivestar:0,badr:0,shares:0,referrals:0,shadow:false,base:0,_locked:false});
+  document.getElementById("lno").value="";
+  const b=document.getElementById("banner");b.className="banner ok";
+  b.innerHTML="Example numbers — enter your L-number above to see your own figures.";
+  syncInputs(); reveal();
+};
+
+document.querySelectorAll(".capref").forEach(e=>e.textContent="");
+syncInputs();
+</script>
+</body>
+</html>
