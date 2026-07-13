@@ -3,279 +3,340 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="robots" content="noindex, nofollow" />
-<title>Your earnings</title>
+<title>Urban Company KSA · Beauty Pro Earnings</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root{
     --bg:#FBF6F4; --ink:#2A1A22; --berry:#B4285E;
-    --berry-soft:#F3D8E2; --muted:#8A7680; --card:#FFFFFF;
-    --line:#EFE3E7; --peer:#C9A66B; --peer-soft:#F0E4CF;
-    --shadow:0 10px 30px rgba(42,26,34,.08);
-    --shadow-sm:0 4px 14px rgba(42,26,34,.06);
+    --berry-soft:#f7e2ea; --card:#ffffff; --muted:#8a7580;
+    --line:#efe4e0; --gold:#c8973f;
+    --shadow:0 1px 2px rgba(42,26,34,.04), 0 8px 24px rgba(42,26,34,.06);
+    --shadow-lg:0 2px 4px rgba(42,26,34,.05), 0 18px 40px rgba(42,26,34,.10);
   }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;padding:0}
+  *{box-sizing:border-box}
+  html,body{margin:0}
   body{
     background:var(--bg); color:var(--ink);
-    font-family:'Inter',system-ui,-apple-system,sans-serif;
-    line-height:1.5; -webkit-font-smoothing:antialiased;
-    padding:24px 18px 64px; max-width:560px; margin:0 auto;
+    font-family:"Inter",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.5;
   }
-  .display{font-family:'Bricolage Grotesque','Inter',sans-serif}
-  .num{font-family:'Bricolage Grotesque','Inter',sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .wrap{max-width:520px; margin:0 auto; padding:22px 18px 56px}
+  h1,h2,h3,.num{font-family:"Bricolage Grotesque",serif}
+  .num{font-variant-numeric:tabular-nums}
 
-  /* ---------- top / greeting ---------- */
-  .brand{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--berry);margin-bottom:22px}
-  .hello{font-size:30px;font-weight:700;line-height:1.15;margin:0 0 6px}
-  .subtitle{color:var(--muted);font-size:15px;margin:0 0 22px}
+  /* Header */
+  .brand{display:flex; align-items:center; gap:9px; font-weight:600; font-size:14px; letter-spacing:.2px; color:var(--berry)}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--berry)}
+  header h1{font-size:29px; line-height:1.12; margin:14px 0 8px; font-weight:800; letter-spacing:-.4px}
+  header p{margin:0; color:var(--muted); font-size:15px}
 
-  /* ---------- month tabs ---------- */
-  .tabs{display:flex;gap:8px;margin:0 0 22px;flex-wrap:wrap}
-  .tab{
-    appearance:none;border:1px solid var(--line);background:var(--card);
-    color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;font-weight:600;
-    padding:9px 18px;border-radius:999px;cursor:pointer;transition:.15s;
+  section{margin-top:26px}
+  .eyebrow{font-size:12px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:var(--berry); margin:0 0 4px}
+  .sec-title{font-size:22px; font-weight:700; margin:0 0 4px; letter-spacing:-.3px}
+  .sec-sub{color:var(--muted); font-size:14px; margin:0 0 16px}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:20px}
+
+  /* Calculator fields */
+  .field{margin-bottom:20px}
+  .field:last-child{margin-bottom:0}
+  .field .lab{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:9px}
+  .field .lab span:first-child{font-weight:600; font-size:14px}
+  .field .val{font-family:"Bricolage Grotesque"; font-weight:700; font-size:18px; color:var(--berry)}
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:7px; border-radius:99px;
+    background:var(--berry-soft); outline:none; margin:0;
   }
-  .tab:hover{border-color:var(--berry-soft)}
-  .tab[aria-selected="true"]{background:var(--berry);border-color:var(--berry);color:#fff;box-shadow:var(--shadow-sm)}
-
-  /* ---------- cards ---------- */
-  .card{
-    background:var(--card);border:1px solid var(--line);border-radius:22px;
-    padding:22px;box-shadow:var(--shadow);margin-bottom:18px;
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:24px; height:24px; border-radius:50%;
+    background:var(--berry); border:3px solid #fff; box-shadow:0 2px 6px rgba(180,40,94,.4); cursor:pointer;
   }
-  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
-  .big-amount{font-size:40px;font-weight:800;line-height:1;margin:2px 0 4px}
-  .big-amount .cur{font-size:20px;font-weight:600;color:var(--muted);margin-right:6px;vertical-align:6px}
-  .stat-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px}
-  .stat{display:flex;flex-direction:column;gap:2px}
-  .stat .k{font-size:12px;color:var(--muted);font-weight:500}
-  .stat .v{font-size:18px;font-weight:700}
-  .star{color:var(--peer)}
-
-  /* ---------- comparison bars ---------- */
-  .compare{margin-top:6px}
-  .bar-block{margin:16px 0}
-  .bar-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
-  .bar-label{font-size:14px;font-weight:600}
-  .bar-val{font-size:16px;font-weight:700}
-  .bar-val .cur{font-size:12px;color:var(--muted);font-weight:600;margin-right:3px}
-  .track{height:16px;border-radius:999px;background:#F1E7EB;overflow:hidden}
-  .fill{height:100%;border-radius:999px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
-  .fill.you{background:linear-gradient(90deg,#D65C8A,#B4285E)}
-  .fill.peer{background:linear-gradient(90deg,#DCC38C,#C9A66B)}
-  .peer-meta{display:flex;gap:16px;margin-top:8px;color:var(--muted);font-size:13px;font-weight:500}
-  .peer-meta b{color:var(--ink);font-weight:700}
-
-  /* ---------- gap banner ---------- */
-  .gap{
-    margin-top:20px;background:linear-gradient(135deg,#FCE7EE,#F7DDE7);
-    border:1px solid var(--berry-soft);border-radius:18px;padding:18px 20px;
+  input[type=range]::-moz-range-thumb{
+    width:24px; height:24px; border-radius:50%; background:var(--berry);
+    border:3px solid #fff; box-shadow:0 2px 6px rgba(180,40,94,.4); cursor:pointer;
   }
-  .gap .amt{font-size:26px;font-weight:800;color:var(--berry);line-height:1;margin-bottom:6px}
-  .gap .msg{font-size:14px;color:#6E3A4E}
+  .hint{font-size:12px; color:var(--muted); margin-top:6px}
 
-  /* ---------- top performer ---------- */
-  .top{
-    margin-top:20px;background:linear-gradient(135deg,#FBEFDD,#F5E3C7);
-    border:1px solid var(--peer-soft);border-radius:18px;padding:20px;text-align:center;
+  /* New-pro checkbox */
+  .check{display:flex; align-items:center; gap:12px; cursor:pointer; border:1.5px solid var(--line);
+    border-radius:14px; padding:13px 15px; transition:.15s; user-select:none}
+  .check:has(input:checked){border-color:var(--berry); background:var(--berry-soft)}
+  .check input{position:absolute; opacity:0; width:0; height:0}
+  .check .box{flex:none; width:22px; height:22px; border-radius:7px; border:2px solid var(--muted);
+    display:grid; place-items:center; transition:.15s; background:#fff}
+  .check:has(input:checked) .box{background:var(--berry); border-color:var(--berry)}
+  .check .box::after{content:""; width:6px; height:11px; border:solid #fff; border-width:0 2.5px 2.5px 0;
+    transform:rotate(45deg) scale(0); transition:.15s; margin-bottom:2px}
+  .check:has(input:checked) .box::after{transform:rotate(45deg) scale(1)}
+  .check .ctxt{font-size:14px; line-height:1.25}
+  .check .ctxt b{font-weight:600}
+  .check .ctxt small{display:block; color:var(--muted); font-size:12px; margin-top:1px}
+  #newProFields{margin-top:20px}
+  #newProFields[hidden]{display:none}
+
+  /* Result */
+  .result{
+    margin-top:18px; background:linear-gradient(135deg,#B4285E,#8f1d4b); color:#fff;
+    border-radius:18px; padding:20px; box-shadow:var(--shadow-lg);
   }
-  .top .medal{font-size:34px;line-height:1;margin-bottom:8px}
-  .top .t{font-size:19px;font-weight:800;margin-bottom:4px}
-  .top .s{font-size:14px;color:#7a5a2c}
+  .result .cap{font-size:12px; letter-spacing:.6px; text-transform:uppercase; opacity:.85; margin:0}
+  .result .big{font-family:"Bricolage Grotesque"; font-weight:800; font-size:44px; line-height:1; margin:6px 0 2px; letter-spacing:-1px}
+  .result .big .sar{font-size:20px; font-weight:600; opacity:.9; margin-right:4px}
+  .result .brk{margin-top:14px; border-top:1px solid rgba(255,255,255,.22); padding-top:12px; font-size:13px}
+  .result .brk div{display:flex; justify-content:space-between; padding:3px 0}
+  .result .brk div[hidden]{display:none}
+  .result .brk .k{opacity:.85}
+  .result .brk .v{font-family:"Bricolage Grotesque"; font-weight:600}
+  .nudge{display:flex; gap:8px; align-items:flex-start; margin-top:14px; background:var(--berry-soft);
+    border-radius:13px; padding:11px 13px; font-size:13px; color:#7a1c40; font-weight:500}
+  .nudge b{color:var(--berry)}
 
-  /* ---------- landing / expired ---------- */
-  .notice{text-align:center;padding:48px 20px}
-  .notice .icon{font-size:44px;margin-bottom:16px}
-  .notice h1{font-size:24px;font-weight:700;margin:0 0 10px}
-  .notice p{color:var(--muted);font-size:15px;max-width:340px;margin:0 auto}
+  /* Tabs */
+  .tabs{display:flex; gap:7px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:2px; margin-bottom:12px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap; padding:8px 15px; border-radius:99px; border:1.5px solid var(--line);
+    background:#fff; font-family:inherit; font-size:13px; font-weight:600; color:var(--ink); cursor:pointer; transition:.15s}
+  .tab.on{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .catrow .tab.on{background:var(--berry); border-color:var(--berry)}
 
-  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:26px;line-height:1.6}
-  .hidden{display:none !important}
+  /* Leaderboard */
+  .lb{list-style:none; margin:0; padding:0}
+  .lb li{display:flex; align-items:center; gap:13px; padding:13px 6px; border-bottom:1px solid var(--line)}
+  .lb li:last-child{border-bottom:none}
+  .rank{flex:none; width:30px; height:30px; border-radius:50%; display:grid; place-items:center;
+    font-family:"Bricolage Grotesque"; font-weight:700; font-size:14px; background:var(--berry-soft); color:var(--berry)}
+  .lb li:nth-child(1) .rank{background:linear-gradient(135deg,#f4d68a,#c8973f); color:#5a3d09}
+  .who{flex:1; min-width:0}
+  .who .nm{font-weight:600; font-size:15px}
+  .who .meta{font-size:12px; color:var(--muted); margin-top:1px}
+  .who .meta .star{color:var(--gold)}
+  .earn{flex:none; text-align:right}
+  .earn .amt{font-family:"Bricolage Grotesque"; font-weight:800; font-size:17px; color:var(--berry)}
+  .earn .amt .s{font-size:11px; font-weight:600; opacity:.7}
+  .earn .lbl{font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.4px}
+  .empty{color:var(--muted); font-size:14px; text-align:center; padding:24px 0}
+
+  /* Explainer */
+  details.exp{margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:4px 18px}
+  details.exp summary{cursor:pointer; font-weight:600; font-size:14px; padding:13px 0; list-style:none; display:flex; justify-content:space-between; align-items:center}
+  details.exp summary::-webkit-details-marker{display:none}
+  details.exp summary::after{content:"+"; font-family:"Bricolage Grotesque"; font-size:20px; color:var(--berry)}
+  details.exp[open] summary::after{content:"\2013"}
+  details.exp .body{font-size:13.5px; color:#4a3a42; padding-bottom:16px; line-height:1.6}
+  details.exp .body code{background:var(--berry-soft); color:#7a1c40; padding:1px 6px; border-radius:6px; font-size:12.5px}
+  details.exp .body ul{margin:8px 0; padding-left:18px}
+  footer{margin-top:30px; text-align:center; font-size:12px; color:var(--muted); line-height:1.6}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<!-- Landing (no link) -->
-<section id="landing" class="notice hidden">
-  <div class="icon">🔒</div>
-  <h1 class="display">Your personal earnings page</h1>
-  <p>This page is private. Please open the personal link that was shared with you to see your monthly earnings.</p>
-</section>
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="brand"><span class="dot"></span> Urban Company · KSA Beauty</div>
+    <h1>How much can you earn?</h1>
+    <p>See how your rating and rebookings grow your monthly incentives — and who's topping the charts.</p>
+  </header>
 
-<!-- Expired -->
-<section id="expired" class="notice hidden">
-  <div class="icon">⌛</div>
-  <h1 class="display">This link has expired</h1>
-  <p>For your privacy this link is no longer active. Please ask for an updated one.</p>
-</section>
+  <!-- ===== Top earners (first) ===== -->
+  <section>
+    <p class="eyebrow">Hall of fame</p>
+    <h2 class="sec-title">Top earners</h2>
+    <p class="sec-sub">Ranked by earnings from rebookings, ratings and commission — the best-rated, most-rebooked pros rise to the top.</p>
 
-<!-- Main -->
-<main id="app" class="hidden">
-  <div class="brand"></div>
-  <h1 class="hello display" id="hello">Hi</h1>
-  <p class="subtitle">Here's what you earned — and what's within reach.</p>
-  <div class="tabs" id="tabs" role="tablist"></div>
-  <div id="panel"></div>
-  <p class="foot"><br/>Colleague shown is a real, anonymous teammate with a similar number of jobs.</p>
-</main>
+    <div class="tabs" id="monthTabs"></div>
+    <div class="tabs catrow" id="catTabs"></div>
+
+    <div class="card">
+      <ul class="lb" id="board"></ul>
+    </div>
+  </section>
+
+  <!-- ===== Calculator ===== -->
+  <section>
+    <p class="eyebrow">For new &amp; prospective pros</p>
+    <h2 class="sec-title">Earnings calculator</h2>
+    <p class="sec-sub">Move the sliders to see how your choices drive your monthly incentive.</p>
+
+    <div class="card">
+      <div class="field">
+        <div class="lab"><span>Your average rating</span><span class="val"><span id="ratOut">4.9</span> ★</span></div>
+        <input type="range" id="rat" min="4.0" max="5.0" step="0.01" value="4.9" />
+        <div class="hint">Higher ratings unlock a higher pay-per-rebooking rate.</div>
+      </div>
+
+      <div class="field">
+        <div class="lab"><span>Rebookings this month</span><span class="val" id="rebOut">20</span></div>
+        <input type="range" id="reb" min="0" max="60" step="1" value="20" />
+        <div class="hint">A rebooking is a customer who books you again. Paid once you're past your first 30 days.</div>
+      </div>
+
+      <div class="field">
+        <label class="check">
+          <input type="checkbox" id="newpro" />
+          <span class="box"></span>
+          <span class="ctxt"><b>I'm a new pro</b><small>Add the new-pro rating bonus (first 150 jobs)</small></span>
+        </label>
+      </div>
+
+      <div id="newProFields" hidden>
+        <div class="field">
+          <div class="lab"><span>5-star ratings this month</span><span class="val" id="fiveOut">40</span></div>
+          <input type="range" id="five" min="0" max="150" step="1" value="40" />
+          <div class="hint">New pros earn <b>+5 SAR</b> per 5-star rating, on their first 150 jobs.</div>
+        </div>
+
+        <div class="field">
+          <div class="lab"><span>Ratings of 3.5 or below</span><span class="val" id="lowOut">0</span></div>
+          <input type="range" id="low" min="0" max="20" step="1" value="0" />
+          <div class="hint">Each low rating deducts <b>3 SAR</b> from the new-pro bonus (never below zero).</div>
+        </div>
+      </div>
+
+      <!-- Live result -->
+      <div class="result">
+        <p class="cap">Estimated monthly incentive</p>
+        <div class="big"><span class="sar">SAR</span><span id="total" class="num">0</span></div>
+        <div class="brk">
+          <div><span class="k">Rebooking incentive</span><span class="v num" id="brkReb">SAR 0</span></div>
+          <div id="rowRat" hidden><span class="k">New-pro rating bonus</span><span class="v num" id="brkRat">SAR 0</span></div>
+        </div>
+      </div>
+
+      <div class="nudge">
+        <span>💡</span>
+        <span id="nudge"><b>A higher rating and more rebookings earn you more</b> — reaching 4.97★ lifts you to the top rebooking rate.</span>
+      </div>
+    </div>
+
+    <details class="exp">
+      <summary>How this is calculated</summary>
+      <div class="body">
+        Your incentive comes from a few clear pieces:
+        <ul>
+          <li><b>Rebooking incentive</b> = rebookings × your per-rebooking rate. The rate rises with your average rating (last 50 jobs): <code>4.85–4.89★ → 8</code>, <code>4.90–4.96★ → 15</code>, <code>4.97★+ → 18</code> SAR each. Below 4.85★ there's no rebooking incentive, and it starts once you're 30 days past your approval date.</li>
+          <li><b>New-pro rating bonus</b> (first 150 jobs) = <code>+5 SAR</code> per 5-star rating minus <code>3 SAR</code> per rating of 3.5 or below. It never goes below zero.</li>
+        </ul>
+        Full payslips also include commission (3% of monthly GMV above SAR 15,000), 100% of tips, referral and shadowing bonuses — this calculator focuses on the parts your rating and rebookings control.
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    Prototype · figures from April–June 2026 incentive runs.<br/>
+    Built to show how great service turns into greater earnings.
+  </footer>
+</div>
 
 <script>
-(function(){
-  "use strict";
+/* ===== Embedded leaderboard data (regenerate with compute_leaderboards.py) ===== */
+const LEADERBOARD_DATA = {"April":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":46,"jobs":123,"incentive":950},{"name":"Shella","city":"Riyadh","rating":4.93,"rebookings":45,"jobs":111,"incentive":819},{"name":"Angelica","city":"Riyadh","rating":4.99,"rebookings":41,"jobs":69,"incentive":738},{"name":"Reneva","city":"Riyadh","rating":4.97,"rebookings":39,"jobs":81,"incentive":702},{"name":"Mayflor","city":"Riyadh","rating":4.93,"rebookings":41,"jobs":106,"incentive":688}],"Spa":[{"name":"Lilibeth","city":"Riyadh","rating":5,"rebookings":44,"jobs":80,"incentive":845},{"name":"Christine","city":"Riyadh","rating":4.95,"rebookings":41,"jobs":101,"incentive":743},{"name":"Lorebie","city":"Riyadh","rating":4.97,"rebookings":40,"jobs":70,"incentive":735},{"name":"Irish","city":"Riyadh","rating":4.91,"rebookings":43,"jobs":86,"incentive":733},{"name":"Annalyn","city":"Riyadh","rating":4.9,"rebookings":41,"jobs":86,"incentive":676}],"Skin":[{"name":"Ancherina","city":"Jeddah","rating":5,"rebookings":14,"jobs":57,"incentive":387},{"name":"Agda","city":"Riyadh","rating":4.97,"rebookings":7,"jobs":49,"incentive":201},{"name":"Mirasol","city":"Riyadh","rating":4.86,"rebookings":8,"jobs":41,"incentive":149},{"name":"Charo","city":"Jeddah","rating":4.92,"rebookings":4,"jobs":32,"incentive":120},{"name":"Mariel","city":"Riyadh","rating":4.93,"rebookings":3,"jobs":38,"incentive":105}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.9,"rebookings":3,"jobs":55,"incentive":180},{"name":"Christine","city":"Riyadh","rating":4.84,"rebookings":6,"jobs":84,"incentive":85},{"name":"Laine","city":"Riyadh","rating":2,"rebookings":0,"jobs":12,"incentive":2}]},"May":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":57,"jobs":127,"incentive":1217},{"name":"Reneva","city":"Riyadh","rating":4.9,"rebookings":61,"jobs":102,"incentive":992},{"name":"Charlene","city":"Riyadh","rating":4.97,"rebookings":48,"jobs":120,"incentive":980},{"name":"Angelica","city":"Riyadh","rating":5,"rebookings":52,"jobs":81,"incentive":936},{"name":"Cecille","city":"Riyadh","rating":4.98,"rebookings":44,"jobs":102,"incentive":867}],"Spa":[{"name":"Irish","city":"Riyadh","rating":4.95,"rebookings":59,"jobs":127,"incentive":1201},{"name":"Lilibeth","city":"Riyadh","rating":4.97,"rebookings":54,"jobs":95,"incentive":1126},{"name":"Christine","city":"Riyadh","rating":4.98,"rebookings":35,"jobs":123,"incentive":879},{"name":"Valerie","city":"Riyadh","rating":4.98,"rebookings":34,"jobs":113,"incentive":851},{"name":"Sonia","city":"Riyadh","rating":5,"rebookings":31,"jobs":111,"incentive":798}],"Skin":[{"name":"Angelica","city":"Riyadh","rating":4.9,"rebookings":31,"jobs":84,"incentive":465},{"name":"Ancherina","city":"Jeddah","rating":4.99,"rebookings":13,"jobs":85,"incentive":264},{"name":"Mirasol","city":"Riyadh","rating":4.93,"rebookings":13,"jobs":59,"incentive":227},{"name":"Dina","city":"Riyadh","rating":5,"rebookings":6,"jobs":32,"incentive":223},{"name":"Mariel","city":"Riyadh","rating":4.95,"rebookings":6,"jobs":81,"incentive":197}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.98,"rebookings":6,"jobs":87,"incentive":253},{"name":"Christine","city":"Riyadh","rating":4.91,"rebookings":14,"jobs":104,"incentive":248},{"name":"Roxanne","city":"Riyadh","rating":4.86,"rebookings":3,"jobs":61,"incentive":114},{"name":"Laine","city":"Riyadh","rating":4.65,"rebookings":5,"jobs":59,"incentive":84},{"name":"Kristine","city":"Riyadh","rating":4.47,"rebookings":1,"jobs":53,"incentive":81}]},"June":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":39,"jobs":114,"incentive":823},{"name":"Jerose","city":"Riyadh","rating":4.91,"rebookings":43,"jobs":113,"incentive":766},{"name":"Charlene","city":"Riyadh","rating":5,"rebookings":38,"jobs":105,"incentive":746},{"name":"Shella","city":"Riyadh","rating":4.98,"rebookings":40,"jobs":91,"incentive":735},{"name":"Reneva","city":"Riyadh","rating":4.9,"rebookings":48,"jobs":84,"incentive":720}],"Spa":[{"name":"Metshelyn","city":"Riyadh","rating":4.97,"rebookings":35,"jobs":123,"incentive":875},{"name":"Irish","city":"Riyadh","rating":4.97,"rebookings":37,"jobs":95,"incentive":841},{"name":"Lilibeth","city":"Riyadh","rating":4.97,"rebookings":40,"jobs":76,"incentive":748},{"name":"Lolita","city":"Riyadh","rating":4.99,"rebookings":37,"jobs":76,"incentive":698},{"name":"Annalyn","city":"Riyadh","rating":5,"rebookings":38,"jobs":73,"incentive":684}],"Skin":[{"name":"Mirasol","city":"Riyadh","rating":4.95,"rebookings":19,"jobs":48,"incentive":285},{"name":"Ancherina","city":"Jeddah","rating":4.94,"rebookings":17,"jobs":48,"incentive":255},{"name":"Anna","city":"Jeddah","rating":4.9,"rebookings":10,"jobs":41,"incentive":247},{"name":"Agda","city":"Riyadh","rating":4.91,"rebookings":14,"jobs":44,"incentive":210},{"name":"Angelica","city":"Riyadh","rating":4.88,"rebookings":26,"jobs":63,"incentive":208}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.88,"rebookings":15,"jobs":94,"incentive":120},{"name":"Kristine","city":"Riyadh","rating":4.73,"rebookings":3,"jobs":54,"incentive":100},{"name":"Analou","city":"Riyadh","rating":4.23,"rebookings":0,"jobs":45,"incentive":70},{"name":"Roxanne","city":"Riyadh","rating":4.83,"rebookings":4,"jobs":59,"incentive":59},{"name":"Laine","city":"Riyadh","rating":4.21,"rebookings":3,"jobs":28,"incentive":47}]}};
 
-  // ---- base64url -> object (UTF-8 safe) ----
-  function decodePayload(frag){
-    var s = frag.replace(/-/g,'+').replace(/_/g,'/');
-    while(s.length % 4) s += '=';
-    var bin = atob(s);
-    var bytes = new Uint8Array(bin.length);
-    for(var i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
-    var json = new TextDecoder('utf-8').decode(bytes);
-    return JSON.parse(json);
-  }
+/* ===== Rate logic (official incentive scheme) ===== */
+const FIVE_STAR_REWARD = 5;   // +5 SAR per 5-star rating
+const LOW_RATING_PEN   = 3;   // -3 SAR per rating <= 3.5
+const JOB_BONUS_CAP    = 150; // new-pro rating bonus applies to first 150 jobs
+function rebookRate(rating){
+  if (rating >= 4.97) return 18;
+  if (rating >= 4.90) return 15;
+  if (rating >= 4.85) return 8;
+  return 0;
+}
 
-  function show(id){ document.getElementById(id).classList.remove('hidden'); }
+/* ===== Calculator ===== */
+const rat = document.getElementById('rat'),
+      reb = document.getElementById('reb'),
+      five = document.getElementById('five'),
+      low = document.getElementById('low'),
+      newpro = document.getElementById('newpro'),
+      newProFields = document.getElementById('newProFields'),
+      rowRat = document.getElementById('rowRat');
 
-  function fmt(n){
-    // group thousands; keep up to 2 decimals only when present
-    var v = Math.round(Number(n)*100)/100;
-    var parts = v.toFixed(2).split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');
-    return parts[1] === '00' ? parts[0] : parts[0] + '.' + parts[1].replace(/0$/,'');
-  }
-  function esc(str){
-    return String(str).replace(/[&<>"']/g, function(c){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-  var MONTH_ORDER = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+newpro.addEventListener('change', () => {
+  const on = newpro.checked;
+  newProFields.hidden = !on;
+  rowRat.hidden = !on;
+  calc();
+});
+[rat, reb, five, low].forEach(el => el.addEventListener('input', calc));
 
-  function starHTML(r){ return '<span class="star">★</span> ' + r; }
+function calc(){
+  const r = +rat.value, nReb = +reb.value;
+  document.getElementById('ratOut').textContent = r.toFixed(2);
+  document.getElementById('rebOut').textContent = nReb;
 
-  function renderMonth(md){
-    var you = Number(md.you), peer = md.peer;
-    var html = '';
+  const rate = rebookRate(r);
+  const rebInc = nReb * rate;
 
-    // You earned
-    html += '<div class="card">';
-    html += '<p class="eyebrow">You earned</p>';
-    html += '<div class="big-amount num"><span class="cur">SAR</span>' + fmt(you) + '</div>';
-    html += '<div class="stat-row">';
-    html += '<div class="stat"><span class="k">Your rating</span><span class="v num">' + starHTML(md.r) + '</span></div>';
-    html += '<div class="stat"><span class="k">Rebookings</span><span class="v num">' + md.rb + '</span></div>';
-    html += '<div class="stat"><span class="k">Jobs done</span><span class="v num">' + md.j + '</span></div>';
-    html += '</div></div>';
+  // New-pro rating bonus is capped to the first 150 jobs, so rated jobs can't exceed 150.
+  let nFive = +five.value, nLow = +low.value;
+  if (nFive + nLow > JOB_BONUS_CAP) nFive = JOB_BONUS_CAP - nLow;
+  document.getElementById('fiveOut').textContent = +five.value;
+  document.getElementById('lowOut').textContent = nLow;
+  const ratBonus = newpro.checked ? Math.max(0, nFive * FIVE_STAR_REWARD - nLow * LOW_RATING_PEN) : 0;
 
-    if(peer){
-      var pe = Number(peer.e);
-      var gap = Math.round((pe - you)*100)/100;
-      var maxv = Math.max(you, pe, 1);
-      var youPct = Math.max(6, Math.round(you/maxv*100));
-      var peerPct = Math.max(6, Math.round(pe/maxv*100));
+  const total = Math.round(rebInc + ratBonus);
 
-      html += '<div class="card compare">';
-      html += '<p class="eyebrow">A colleague with the same ' + md.j + ' jobs earned</p>';
-      html += '<div class="big-amount num" style="color:var(--peer)"><span class="cur">SAR</span>' + fmt(pe) + '</div>';
-      html += '<div class="peer-meta">Their rating <b class="num">' + starHTML(peer.r) + '</b> · Rebookings <b class="num">' + peer.rb + '</b></div>';
+  document.getElementById('brkReb').textContent = 'SAR ' + rebInc.toLocaleString();
+  document.getElementById('brkRat').textContent = 'SAR ' + ratBonus.toLocaleString();
+  document.getElementById('total').textContent = total.toLocaleString();
 
-      html += '<div style="margin-top:18px">';
-      html += barBlock('You', you, youPct, 'you');
-      html += barBlock('Colleague', pe, peerPct, 'peer');
-      html += '</div>';
+  const n = document.getElementById('nudge');
+  if (r < 4.85)
+    n.innerHTML = '<b>Push your rating to 4.85★</b> to start earning the rebooking incentive — every rebooking then pays off.';
+  else if (r < 4.97)
+    n.innerHTML = 'You\'re earning <b>SAR ' + rate + ' per rebooking</b>. Reach <b>4.97★</b> to jump to SAR 18 each — a higher rating and more rebookings earn you more.';
+  else
+    n.innerHTML = 'Top rating unlocked — <b>SAR 18 per rebooking</b>! More rebookings now earn you the most.';
+}
 
-      html += '<div class="gap">';
-      html += '<div class="amt num">+SAR ' + fmt(gap) + ' within reach</div>';
-      html += '<div class="msg">The difference is a higher rating and more rebookings.</div>';
-      html += '</div>';
-      html += '</div>';
-    } else {
-      html += '<div class="card">';
-      html += '<div class="top">';
-      html += '<div class="medal">🏆</div>';
-      html += '<div class="t display">You\'re among the highest earners for your workload</div>';
-      html += '<div class="s">Fantastic work this month — keep that rating high and those rebookings coming.</div>';
-      html += '</div></div>';
-    }
-    return html;
-  }
+/* ===== Leaderboards ===== */
+const MONTHS = Object.keys(LEADERBOARD_DATA);
+const CATS = [['Salon','Nails'],['Spa','Spa'],['Skin','Skin'],['Hair','Hair']];
+let curMonth = MONTHS[MONTHS.length-1], curCat = 'Salon';
 
-  function barBlock(label, val, pct, cls){
-    var h = '<div class="bar-block">';
-    h += '<div class="bar-head"><span class="bar-label">' + label + '</span>';
-    h += '<span class="bar-val num"><span class="cur">SAR</span>' + fmt(val) + '</span></div>';
-    h += '<div class="track"><div class="fill ' + cls + '" style="width:0"></div></div>';
-    h += '</div>';
-    return h;
-  }
+const monthTabs = document.getElementById('monthTabs'),
+      catTabs = document.getElementById('catTabs'),
+      board = document.getElementById('board');
 
-  function main(){
-    var frag = (window.location.hash || '').replace(/^#/,'').trim();
-    if(!frag){ show('landing'); return; }
+MONTHS.forEach(m => {
+  const b = document.createElement('button');
+  b.className = 'tab' + (m===curMonth?' on':''); b.textContent = m; b.dataset.m = m;
+  b.onclick = () => { curMonth = m; syncTabs(); render(); };
+  monthTabs.appendChild(b);
+});
+CATS.forEach(([key,label]) => {
+  const b = document.createElement('button');
+  b.className = 'tab' + (key===curCat?' on':''); b.textContent = label; b.dataset.c = key;
+  b.onclick = () => { curCat = key; syncTabs(); render(); };
+  catTabs.appendChild(b);
+});
+function syncTabs(){
+  [...monthTabs.children].forEach(b => b.classList.toggle('on', b.dataset.m===curMonth));
+  [...catTabs.children].forEach(b => b.classList.toggle('on', b.dataset.c===curCat));
+}
+function render(){
+  const rows = (LEADERBOARD_DATA[curMonth] && LEADERBOARD_DATA[curMonth][curCat]) || [];
+  if(!rows.length){ board.innerHTML = '<li class="empty">No data for this category this month.</li>'; return; }
+  board.innerHTML = rows.map((p,i) => {
+    const star = p.rating >= 4.5 ? ' <span class="star">★</span> ' + p.rating.toFixed(2) : '';
+    return `<li>
+      <div class="rank">${i+1}</div>
+      <div class="who">
+        <div class="nm">${p.name}</div>
+        <div class="meta">${p.jobs} jobs · ${p.rebookings} rebookings${star}</div>
+      </div>
+      <div class="earn">
+        <div class="amt"><span class="s">SAR</span> ${p.incentive.toLocaleString()}</div>
+        <div class="lbl">incentive</div>
+      </div>
+    </li>`;
+  }).join('');
+}
 
-    var data;
-    try { data = decodePayload(frag); }
-    catch(e){ show('landing'); return; }
-
-    // expiry check
-    if(data.exp){
-      var today = new Date(); today.setHours(0,0,0,0);
-      var exp = new Date(data.exp + 'T23:59:59');
-      if(isFinite(exp) && today > exp){ show('expired'); return; }
-    }
-
-    if(!data.m || typeof data.m !== 'object'){ show('landing'); return; }
-
-    document.getElementById('hello').textContent = 'Hi ' + (data.n || 'there');
-    show('app');
-
-    var months = Object.keys(data.m).sort(function(a,b){
-      return MONTH_ORDER.indexOf(a) - MONTH_ORDER.indexOf(b);
-    });
-
-    var tabs = document.getElementById('tabs');
-    var panel = document.getElementById('panel');
-
-    function select(m){
-      Array.prototype.forEach.call(tabs.children, function(btn){
-        btn.setAttribute('aria-selected', btn.dataset.m === m ? 'true':'false');
-      });
-      panel.innerHTML = renderMonth(data.m[m]);
-      // animate bars from 0 to target width after paint
-      var md = data.m[m];
-      if(md.peer){
-        var you = Number(md.you), pe = Number(md.peer.e);
-        var maxv = Math.max(you, pe, 1);
-        var youW = Math.max(6, Math.round(you/maxv*100)) + '%';
-        var peerW = Math.max(6, Math.round(pe/maxv*100)) + '%';
-        var fills = panel.querySelectorAll('.fill');
-        requestAnimationFrame(function(){
-          requestAnimationFrame(function(){
-            if(fills[0]) fills[0].style.width = youW;
-            if(fills[1]) fills[1].style.width = peerW;
-          });
-        });
-      }
-    }
-
-    if(months.length <= 1) tabs.style.display = 'none';
-    months.forEach(function(m, i){
-      var b = document.createElement('button');
-      b.className = 'tab'; b.type = 'button'; b.textContent = m;
-      b.dataset.m = m; b.setAttribute('role','tab');
-      b.addEventListener('click', function(){ select(m); });
-      tabs.appendChild(b);
-    });
-
-    select(months[months.length - 1]); // default to latest month
-  }
-
-  window.addEventListener('hashchange', function(){ window.location.reload(); });
-  main();
-})();
+calc(); render();
 </script>
 </body>
 </html>
