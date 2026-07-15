@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Incentives calculator</title>
+<title>Urban Company KSA · Beauty Pro Earnings</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -59,23 +59,6 @@
   }
   .hint{font-size:12px; color:var(--muted); margin-top:6px}
 
-  /* New-pro checkbox */
-  .check{display:flex; align-items:center; gap:12px; cursor:pointer; border:1.5px solid var(--line);
-    border-radius:14px; padding:13px 15px; transition:.15s; user-select:none}
-  .check:has(input:checked){border-color:var(--berry); background:var(--berry-soft)}
-  .check input{position:absolute; opacity:0; width:0; height:0}
-  .check .box{flex:none; width:22px; height:22px; border-radius:7px; border:2px solid var(--muted);
-    display:grid; place-items:center; transition:.15s; background:#fff}
-  .check:has(input:checked) .box{background:var(--berry); border-color:var(--berry)}
-  .check .box::after{content:""; width:6px; height:11px; border:solid #fff; border-width:0 2.5px 2.5px 0;
-    transform:rotate(45deg) scale(0); transition:.15s; margin-bottom:2px}
-  .check:has(input:checked) .box::after{transform:rotate(45deg) scale(1)}
-  .check .ctxt{font-size:14px; line-height:1.25}
-  .check .ctxt b{font-weight:600}
-  .check .ctxt small{display:block; color:var(--muted); font-size:12px; margin-top:1px}
-  #newProFields{margin-top:20px}
-  #newProFields[hidden]{display:none}
-
   /* Result */
   .result{
     margin-top:18px; background:linear-gradient(135deg,#B4285E,#8f1d4b); color:#fff;
@@ -84,11 +67,7 @@
   .result .cap{font-size:12px; letter-spacing:.6px; text-transform:uppercase; opacity:.85; margin:0}
   .result .big{font-family:"Bricolage Grotesque"; font-weight:800; font-size:44px; line-height:1; margin:6px 0 2px; letter-spacing:-1px}
   .result .big .sar{font-size:20px; font-weight:600; opacity:.9; margin-right:4px}
-  .result .brk{margin-top:14px; border-top:1px solid rgba(255,255,255,.22); padding-top:12px; font-size:13px}
-  .result .brk div{display:flex; justify-content:space-between; padding:3px 0}
-  .result .brk div[hidden]{display:none}
-  .result .brk .k{opacity:.85}
-  .result .brk .v{font-family:"Bricolage Grotesque"; font-weight:600}
+  .result .sub{font-size:13px; opacity:.85; margin:8px 0 0}
   .nudge{display:flex; gap:8px; align-items:flex-start; margin-top:14px; background:var(--berry-soft);
     border-radius:13px; padding:11px 13px; font-size:13px; color:#7a1c40; font-weight:500}
   .nudge b{color:var(--berry)}
@@ -130,21 +109,12 @@
   footer{margin-top:30px; text-align:center; font-size:12px; color:var(--muted); line-height:1.6}
 </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-67PP4FCR1K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-67PP4FCR1K');
-</script>
 <body>
 <div class="wrap">
 
   <!-- ===== Header ===== -->
   <header>
-    <div class="brand"><span class="dot"></span>· KSA Beauty</div>
+    <div class="brand"><span class="dot"></span> Urban Company · KSA Beauty</div>
     <h1>How much can you earn?</h1>
     <p>See how your rating and rebookings grow your monthly incentives — and who's topping the charts.</p>
   </header>
@@ -153,7 +123,7 @@
   <section>
     <p class="eyebrow">Hall of fame</p>
     <h2 class="sec-title">Top earners</h2>
-    <p class="sec-sub">Ranked by earnings from rebookings, ratings and commission — the best-rated, most-rebooked pros rise to the top.</p>
+    <p class="sec-sub">Ranked by earnings from rebookings and commission — the best-rated, most-rebooked pros rise to the top.</p>
 
     <div class="tabs" id="monthTabs"></div>
     <div class="tabs catrow" id="catTabs"></div>
@@ -165,9 +135,9 @@
 
   <!-- ===== Calculator ===== -->
   <section>
-    <p class="eyebrow">For new &amp; prospective pros</p>
+    <p class="eyebrow">Plan your earnings</p>
     <h2 class="sec-title">Earnings calculator</h2>
-    <p class="sec-sub">Move the sliders to see how your choices drive your monthly incentive.</p>
+    <p class="sec-sub">Move the sliders to see how your rating and rebookings drive your monthly incentive.</p>
 
     <div class="card">
       <div class="field">
@@ -182,36 +152,11 @@
         <div class="hint">A rebooking is a customer who books you again. Paid once you're past your first 30 days.</div>
       </div>
 
-      <div class="field">
-        <label class="check">
-          <input type="checkbox" id="newpro" />
-          <span class="box"></span>
-          <span class="ctxt"><b>I'm a new pro</b><small>Add the new-pro rating bonus (first 150 jobs)</small></span>
-        </label>
-      </div>
-
-      <div id="newProFields" hidden>
-        <div class="field">
-          <div class="lab"><span>5-star ratings this month</span><span class="val" id="fiveOut">40</span></div>
-          <input type="range" id="five" min="0" max="150" step="1" value="40" />
-          <div class="hint">New pros earn <b>+5 SAR</b> per 5-star rating, on their first 150 jobs.</div>
-        </div>
-
-        <div class="field">
-          <div class="lab"><span>Ratings of 3.5 or below</span><span class="val" id="lowOut">0</span></div>
-          <input type="range" id="low" min="0" max="20" step="1" value="0" />
-          <div class="hint">Each low rating deducts <b>3 SAR</b> from the new-pro bonus (never below zero).</div>
-        </div>
-      </div>
-
       <!-- Live result -->
       <div class="result">
         <p class="cap">Estimated monthly incentive</p>
         <div class="big"><span class="sar">SAR</span><span id="total" class="num">0</span></div>
-        <div class="brk">
-          <div><span class="k">Rebooking incentive</span><span class="v num" id="brkReb">SAR 0</span></div>
-          <div id="rowRat" hidden><span class="k">New-pro rating bonus</span><span class="v num" id="brkRat">SAR 0</span></div>
-        </div>
+        <p class="sub" id="resultSub">from your rebookings</p>
       </div>
 
       <div class="nudge">
@@ -220,7 +165,18 @@
       </div>
     </div>
 
-    
+    <details class="exp">
+      <summary>How this is calculated</summary>
+      <div class="body">
+        Your rebooking incentive = rebookings × your per-rebooking rate. The rate rises with your average rating (last 50 jobs):
+        <ul>
+          <li><code>4.85–4.89★ → 8 SAR</code> per rebooking</li>
+          <li><code>4.90–4.96★ → 15 SAR</code> per rebooking</li>
+          <li><code>4.97★ and above → 18 SAR</code> per rebooking</li>
+        </ul>
+        Below 4.85★ there's no rebooking incentive, and it starts once you're 30 days past your approval date. Full payslips also include commission (3% of monthly GMV above SAR 15,000 when rated 4.85★+), 100% of tips, and referral and shadowing bonuses.
+      </div>
+    </details>
   </section>
 
   <footer>
@@ -231,12 +187,9 @@
 
 <script>
 /* ===== Embedded leaderboard data (regenerate with compute_leaderboards.py) ===== */
-const LEADERBOARD_DATA = {"April":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":46,"jobs":123,"incentive":950},{"name":"Shella","city":"Riyadh","rating":4.93,"rebookings":45,"jobs":111,"incentive":819},{"name":"Angelica","city":"Riyadh","rating":4.99,"rebookings":41,"jobs":69,"incentive":738},{"name":"Reneva","city":"Riyadh","rating":4.97,"rebookings":39,"jobs":81,"incentive":702},{"name":"Mayflor","city":"Riyadh","rating":4.93,"rebookings":41,"jobs":106,"incentive":688}],"Spa":[{"name":"Lilibeth","city":"Riyadh","rating":5,"rebookings":44,"jobs":80,"incentive":845},{"name":"Christine","city":"Riyadh","rating":4.95,"rebookings":41,"jobs":101,"incentive":743},{"name":"Lorebie","city":"Riyadh","rating":4.97,"rebookings":40,"jobs":70,"incentive":735},{"name":"Irish","city":"Riyadh","rating":4.91,"rebookings":43,"jobs":86,"incentive":733},{"name":"Annalyn","city":"Riyadh","rating":4.9,"rebookings":41,"jobs":86,"incentive":676}],"Skin":[{"name":"Ancherina","city":"Jeddah","rating":5,"rebookings":14,"jobs":57,"incentive":387},{"name":"Agda","city":"Riyadh","rating":4.97,"rebookings":7,"jobs":49,"incentive":201},{"name":"Mirasol","city":"Riyadh","rating":4.86,"rebookings":8,"jobs":41,"incentive":149},{"name":"Charo","city":"Jeddah","rating":4.92,"rebookings":4,"jobs":32,"incentive":120},{"name":"Mariel","city":"Riyadh","rating":4.93,"rebookings":3,"jobs":38,"incentive":105}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.9,"rebookings":3,"jobs":55,"incentive":180},{"name":"Christine","city":"Riyadh","rating":4.84,"rebookings":6,"jobs":84,"incentive":85},{"name":"Laine","city":"Riyadh","rating":2,"rebookings":0,"jobs":12,"incentive":2}]},"May":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":57,"jobs":127,"incentive":1217},{"name":"Reneva","city":"Riyadh","rating":4.9,"rebookings":61,"jobs":102,"incentive":992},{"name":"Charlene","city":"Riyadh","rating":4.97,"rebookings":48,"jobs":120,"incentive":980},{"name":"Angelica","city":"Riyadh","rating":5,"rebookings":52,"jobs":81,"incentive":936},{"name":"Cecille","city":"Riyadh","rating":4.98,"rebookings":44,"jobs":102,"incentive":867}],"Spa":[{"name":"Irish","city":"Riyadh","rating":4.95,"rebookings":59,"jobs":127,"incentive":1201},{"name":"Lilibeth","city":"Riyadh","rating":4.97,"rebookings":54,"jobs":95,"incentive":1126},{"name":"Christine","city":"Riyadh","rating":4.98,"rebookings":35,"jobs":123,"incentive":879},{"name":"Valerie","city":"Riyadh","rating":4.98,"rebookings":34,"jobs":113,"incentive":851},{"name":"Sonia","city":"Riyadh","rating":5,"rebookings":31,"jobs":111,"incentive":798}],"Skin":[{"name":"Angelica","city":"Riyadh","rating":4.9,"rebookings":31,"jobs":84,"incentive":465},{"name":"Ancherina","city":"Jeddah","rating":4.99,"rebookings":13,"jobs":85,"incentive":264},{"name":"Mirasol","city":"Riyadh","rating":4.93,"rebookings":13,"jobs":59,"incentive":227},{"name":"Dina","city":"Riyadh","rating":5,"rebookings":6,"jobs":32,"incentive":223},{"name":"Mariel","city":"Riyadh","rating":4.95,"rebookings":6,"jobs":81,"incentive":197}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.98,"rebookings":6,"jobs":87,"incentive":253},{"name":"Christine","city":"Riyadh","rating":4.91,"rebookings":14,"jobs":104,"incentive":248},{"name":"Roxanne","city":"Riyadh","rating":4.86,"rebookings":3,"jobs":61,"incentive":114},{"name":"Laine","city":"Riyadh","rating":4.65,"rebookings":5,"jobs":59,"incentive":84},{"name":"Kristine","city":"Riyadh","rating":4.47,"rebookings":1,"jobs":53,"incentive":81}]},"June":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":39,"jobs":114,"incentive":823},{"name":"Jerose","city":"Riyadh","rating":4.91,"rebookings":43,"jobs":113,"incentive":766},{"name":"Charlene","city":"Riyadh","rating":5,"rebookings":38,"jobs":105,"incentive":746},{"name":"Shella","city":"Riyadh","rating":4.98,"rebookings":40,"jobs":91,"incentive":735},{"name":"Reneva","city":"Riyadh","rating":4.9,"rebookings":48,"jobs":84,"incentive":720}],"Spa":[{"name":"Metshelyn","city":"Riyadh","rating":4.97,"rebookings":35,"jobs":123,"incentive":875},{"name":"Irish","city":"Riyadh","rating":4.97,"rebookings":37,"jobs":95,"incentive":841},{"name":"Lilibeth","city":"Riyadh","rating":4.97,"rebookings":40,"jobs":76,"incentive":748},{"name":"Lolita","city":"Riyadh","rating":4.99,"rebookings":37,"jobs":76,"incentive":698},{"name":"Annalyn","city":"Riyadh","rating":5,"rebookings":38,"jobs":73,"incentive":684}],"Skin":[{"name":"Mirasol","city":"Riyadh","rating":4.95,"rebookings":19,"jobs":48,"incentive":285},{"name":"Ancherina","city":"Jeddah","rating":4.94,"rebookings":17,"jobs":48,"incentive":255},{"name":"Anna","city":"Jeddah","rating":4.9,"rebookings":10,"jobs":41,"incentive":247},{"name":"Agda","city":"Riyadh","rating":4.91,"rebookings":14,"jobs":44,"incentive":210},{"name":"Angelica","city":"Riyadh","rating":4.88,"rebookings":26,"jobs":63,"incentive":208}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.88,"rebookings":15,"jobs":94,"incentive":120},{"name":"Kristine","city":"Riyadh","rating":4.73,"rebookings":3,"jobs":54,"incentive":100},{"name":"Analou","city":"Riyadh","rating":4.23,"rebookings":0,"jobs":45,"incentive":70},{"name":"Roxanne","city":"Riyadh","rating":4.83,"rebookings":4,"jobs":59,"incentive":59},{"name":"Laine","city":"Riyadh","rating":4.21,"rebookings":3,"jobs":28,"incentive":47}]}};
+const LEADERBOARD_DATA = {"April":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":46,"jobs":123,"incentive":950},{"name":"Shella","city":"Riyadh","rating":4.93,"rebookings":45,"jobs":111,"incentive":819},{"name":"Angelica","city":"Riyadh","rating":4.99,"rebookings":41,"jobs":69,"incentive":738},{"name":"Reneva","city":"Riyadh","rating":4.97,"rebookings":39,"jobs":81,"incentive":702},{"name":"Mayflor","city":"Riyadh","rating":4.93,"rebookings":41,"jobs":106,"incentive":688}],"Spa":[{"name":"Lilibeth","city":"Riyadh","rating":5,"rebookings":44,"jobs":80,"incentive":845},{"name":"Christine","city":"Riyadh","rating":4.95,"rebookings":41,"jobs":101,"incentive":743},{"name":"Lorebie","city":"Riyadh","rating":4.97,"rebookings":40,"jobs":70,"incentive":735},{"name":"Irish","city":"Riyadh","rating":4.91,"rebookings":43,"jobs":86,"incentive":733},{"name":"Annalyn","city":"Riyadh","rating":4.9,"rebookings":41,"jobs":86,"incentive":676}],"Skin":[{"name":"Ancherina","city":"Jeddah","rating":5,"rebookings":14,"jobs":57,"incentive":252},{"name":"Agda","city":"Riyadh","rating":4.97,"rebookings":7,"jobs":49,"incentive":126},{"name":"Mirasol","city":"Riyadh","rating":4.86,"rebookings":8,"jobs":41,"incentive":64},{"name":"Charo","city":"Jeddah","rating":4.92,"rebookings":4,"jobs":32,"incentive":60},{"name":"Mariel","city":"Riyadh","rating":4.93,"rebookings":3,"jobs":38,"incentive":45}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.9,"rebookings":3,"jobs":55,"incentive":45},{"name":"Christine","city":"Riyadh","rating":4.84,"rebookings":6,"jobs":84,"incentive":0},{"name":"Laine","city":"Riyadh","rating":2,"rebookings":0,"jobs":12,"incentive":0}]},"May":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":57,"jobs":127,"incentive":1217},{"name":"Reneva","city":"Riyadh","rating":4.9,"rebookings":61,"jobs":102,"incentive":992},{"name":"Charlene","city":"Riyadh","rating":4.97,"rebookings":48,"jobs":120,"incentive":980},{"name":"Angelica","city":"Riyadh","rating":5,"rebookings":52,"jobs":81,"incentive":936},{"name":"Cecille","city":"Riyadh","rating":4.98,"rebookings":44,"jobs":102,"incentive":867}],"Spa":[{"name":"Irish","city":"Riyadh","rating":4.95,"rebookings":59,"jobs":127,"incentive":1201},{"name":"Lilibeth","city":"Riyadh","rating":4.97,"rebookings":54,"jobs":95,"incentive":1126},{"name":"Christine","city":"Riyadh","rating":4.98,"rebookings":35,"jobs":123,"incentive":879},{"name":"Valerie","city":"Riyadh","rating":4.98,"rebookings":34,"jobs":113,"incentive":851},{"name":"Sonia","city":"Riyadh","rating":5,"rebookings":31,"jobs":111,"incentive":798}],"Skin":[{"name":"Angelica","city":"Riyadh","rating":4.9,"rebookings":31,"jobs":84,"incentive":465},{"name":"Ancherina","city":"Jeddah","rating":4.99,"rebookings":13,"jobs":85,"incentive":234},{"name":"Mirasol","city":"Riyadh","rating":4.93,"rebookings":13,"jobs":59,"incentive":195},{"name":"Dina","city":"Riyadh","rating":5,"rebookings":6,"jobs":32,"incentive":108},{"name":"Agda","city":"Riyadh","rating":4.93,"rebookings":7,"jobs":58,"incentive":105}],"Hair":[{"name":"Christine","city":"Riyadh","rating":4.91,"rebookings":14,"jobs":104,"incentive":248},{"name":"Rochelle","city":"Riyadh","rating":4.98,"rebookings":6,"jobs":87,"incentive":108},{"name":"Roxanne","city":"Riyadh","rating":4.86,"rebookings":3,"jobs":61,"incentive":24},{"name":"Laine","city":"Riyadh","rating":4.65,"rebookings":5,"jobs":59,"incentive":0},{"name":"Kristine","city":"Riyadh","rating":4.47,"rebookings":1,"jobs":53,"incentive":0}]},"June":{"Salon":[{"name":"Marivic","city":"Riyadh","rating":5,"rebookings":39,"jobs":114,"incentive":823},{"name":"Jerose","city":"Riyadh","rating":4.91,"rebookings":43,"jobs":113,"incentive":766},{"name":"Charlene","city":"Riyadh","rating":5,"rebookings":38,"jobs":105,"incentive":746},{"name":"Shella","city":"Riyadh","rating":4.98,"rebookings":40,"jobs":91,"incentive":735},{"name":"Reneva","city":"Riyadh","rating":4.9,"rebookings":48,"jobs":84,"incentive":720}],"Spa":[{"name":"Metshelyn","city":"Riyadh","rating":4.97,"rebookings":35,"jobs":123,"incentive":875},{"name":"Irish","city":"Riyadh","rating":4.97,"rebookings":37,"jobs":95,"incentive":841},{"name":"Lilibeth","city":"Riyadh","rating":4.97,"rebookings":40,"jobs":76,"incentive":748},{"name":"Lolita","city":"Riyadh","rating":4.99,"rebookings":37,"jobs":76,"incentive":698},{"name":"Annalyn","city":"Riyadh","rating":5,"rebookings":38,"jobs":73,"incentive":684}],"Skin":[{"name":"Mirasol","city":"Riyadh","rating":4.95,"rebookings":19,"jobs":48,"incentive":285},{"name":"Ancherina","city":"Jeddah","rating":4.94,"rebookings":17,"jobs":48,"incentive":255},{"name":"Agda","city":"Riyadh","rating":4.91,"rebookings":14,"jobs":44,"incentive":210},{"name":"Angelica","city":"Riyadh","rating":4.88,"rebookings":26,"jobs":63,"incentive":208},{"name":"Anna","city":"Jeddah","rating":4.9,"rebookings":10,"jobs":41,"incentive":150}],"Hair":[{"name":"Rochelle","city":"Riyadh","rating":4.88,"rebookings":15,"jobs":94,"incentive":120},{"name":"Kristine","city":"Riyadh","rating":4.73,"rebookings":3,"jobs":54,"incentive":0},{"name":"Analou","city":"Riyadh","rating":4.23,"rebookings":0,"jobs":45,"incentive":0},{"name":"Roxanne","city":"Riyadh","rating":4.83,"rebookings":4,"jobs":59,"incentive":0},{"name":"Laine","city":"Riyadh","rating":4.21,"rebookings":3,"jobs":28,"incentive":0}]}};
 
-/* ===== Rate logic (official incentive scheme) ===== */
-const FIVE_STAR_REWARD = 5;   // +5 SAR per 5-star rating
-const LOW_RATING_PEN   = 3;   // -3 SAR per rating <= 3.5
-const JOB_BONUS_CAP    = 150; // new-pro rating bonus applies to first 150 jobs
+/* ===== Rate logic ===== */
 function rebookRate(rating){
   if (rating >= 4.97) return 18;
   if (rating >= 4.90) return 15;
@@ -246,20 +199,9 @@ function rebookRate(rating){
 
 /* ===== Calculator ===== */
 const rat = document.getElementById('rat'),
-      reb = document.getElementById('reb'),
-      five = document.getElementById('five'),
-      low = document.getElementById('low'),
-      newpro = document.getElementById('newpro'),
-      newProFields = document.getElementById('newProFields'),
-      rowRat = document.getElementById('rowRat');
+      reb = document.getElementById('reb');
 
-newpro.addEventListener('change', () => {
-  const on = newpro.checked;
-  newProFields.hidden = !on;
-  rowRat.hidden = !on;
-  calc();
-});
-[rat, reb, five, low].forEach(el => el.addEventListener('input', calc));
+[rat, reb].forEach(el => el.addEventListener('input', calc));
 
 function calc(){
   const r = +rat.value, nReb = +reb.value;
@@ -267,20 +209,10 @@ function calc(){
   document.getElementById('rebOut').textContent = nReb;
 
   const rate = rebookRate(r);
-  const rebInc = nReb * rate;
-
-  // New-pro rating bonus is capped to the first 150 jobs, so rated jobs can't exceed 150.
-  let nFive = +five.value, nLow = +low.value;
-  if (nFive + nLow > JOB_BONUS_CAP) nFive = JOB_BONUS_CAP - nLow;
-  document.getElementById('fiveOut').textContent = +five.value;
-  document.getElementById('lowOut').textContent = nLow;
-  const ratBonus = newpro.checked ? Math.max(0, nFive * FIVE_STAR_REWARD - nLow * LOW_RATING_PEN) : 0;
-
-  const total = Math.round(rebInc + ratBonus);
-
-  document.getElementById('brkReb').textContent = 'SAR ' + rebInc.toLocaleString();
-  document.getElementById('brkRat').textContent = 'SAR ' + ratBonus.toLocaleString();
+  const total = nReb * rate;
   document.getElementById('total').textContent = total.toLocaleString();
+  document.getElementById('resultSub').textContent =
+    rate > 0 ? nReb + ' rebookings × SAR ' + rate + ' each' : 'reach 4.85★ to start earning';
 
   const n = document.getElementById('nudge');
   if (r < 4.85)
