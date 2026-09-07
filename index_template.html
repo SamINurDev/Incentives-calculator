@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Monthly Earnings</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-67PP4FCR1K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-67PP4FCR1K');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#FBF6F4; --ink:#2A1A22; --berry:#B4285E; --plum:#6D2E5B; --gold:#B07C2E;
+    --berry-soft:#f7e2ea; --plum-soft:#efe3ec; --card:#ffffff; --muted:#8a7580;
+    --line:#EEE1DC;
+    --shadow:0 1px 2px rgba(42,26,34,.04), 0 8px 24px rgba(42,26,34,.06);
+    --shadow-lg:0 2px 4px rgba(42,26,34,.05), 0 18px 40px rgba(42,26,34,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.5;
+  }
+  .wrap{max-width:560px; margin:0 auto; padding:22px 18px 56px}
+  h1,h2,h3,.num{font-family:"Bricolage Grotesque",serif}
+  .num{font-variant-numeric:tabular-nums}
+
+  .brand{display:flex; align-items:center; gap:9px; font-weight:600; font-size:14px; letter-spacing:.2px; color:var(--berry)}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--berry)}
+  header h1{font-size:27px; line-height:1.15; margin:14px 0 6px; font-weight:800; letter-spacing:-.4px}
+  header p{margin:0; color:var(--muted); font-size:15px}
+
+  section{margin-top:22px}
+  .eyebrow{font-size:12px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:var(--berry); margin:0 0 4px}
+  .sec-title{font-size:20px; font-weight:700; margin:0 0 4px; letter-spacing:-.3px}
+  .sec-sub{color:var(--muted); font-size:14px; margin:0 0 14px}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:20px}
+
+  /* Name search / picker */
+  .search-row input{
+    width:100%; padding:14px 16px; border-radius:14px; border:1.5px solid var(--line);
+    font-family:inherit; font-size:15px; color:var(--ink); background:#fff; outline:none;
+  }
+  .search-row input:focus{border-color:var(--berry)}
+  .search-hint{font-size:12px; color:var(--muted); margin-top:8px}
+  .results{margin-top:12px}
+  .results .grp{margin-bottom:4px}
+  .results .grp-title{font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase;
+    color:var(--plum); padding:10px 4px 6px}
+  .results button.result-item{
+    display:block; width:100%; text-align:left; padding:11px 12px; border-radius:12px; border:none;
+    background:transparent; font-family:inherit; font-size:14.5px; color:var(--ink); cursor:pointer;
+  }
+  .results button.result-item:hover{background:var(--berry-soft)}
+  .no-results{color:var(--muted); font-size:14px; padding:16px 4px}
+
+  .change-name{
+    display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:99px;
+    border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:13px;
+    font-weight:600; color:var(--ink); cursor:pointer; margin-bottom:16px;
+  }
+  .change-name:hover{border-color:var(--berry); color:var(--berry)}
+
+  /* Month tabs */
+  .tabs{display:flex; gap:7px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:2px; margin-bottom:16px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap; padding:8px 15px; border-radius:99px; border:1.5px solid var(--line);
+    background:#fff; font-family:inherit; font-size:13px; font-weight:600; color:var(--ink); cursor:pointer; transition:.15s}
+  .tab.on{background:var(--ink); color:#fff; border-color:var(--ink)}
+
+  /* You earned hero */
+  .hero{background:linear-gradient(135deg,var(--berry),var(--plum)); color:#fff;
+    border-radius:20px; padding:22px; box-shadow:var(--shadow-lg)}
+  .hero .cap{font-size:12px; letter-spacing:.6px; text-transform:uppercase; opacity:.85; margin:0}
+  .hero .big{font-family:"Bricolage Grotesque"; font-weight:800; font-size:42px; line-height:1; margin:6px 0 10px; letter-spacing:-1px}
+  .hero .big .sar{font-size:19px; font-weight:600; opacity:.9; margin-right:4px}
+  .hero .stats{display:flex; gap:18px; font-size:13px; opacity:.92; flex-wrap:wrap}
+  .hero .stats b{font-weight:700}
+
+  /* Earnings breakdown */
+  .bd-item{display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--line); font-size:14px}
+  .bd-item:last-child{border-bottom:none}
+  .bd-item .bd-lbl{font-weight:500}
+  .bd-item .bd-val{font-family:"Bricolage Grotesque"; font-weight:700; color:var(--berry)}
+
+  /* Commission explainer */
+  .commission-list{list-style:none; margin:0; padding:0; font-size:13.5px; line-height:1.5}
+  .commission-list li{padding:10px 0; border-bottom:1px solid var(--line)}
+  .commission-list li:last-child{border-bottom:none}
+  .commission-list li.mine{color:var(--berry); font-weight:600}
+  .commission-list li .tag{display:inline-block; font-size:9.5px; font-weight:700; text-transform:uppercase;
+    letter-spacing:.3px; color:#fff; background:var(--berry); padding:2px 7px; border-radius:99px; margin-left:6px}
+
+  /* Calculator */
+  .calc-field{margin-bottom:20px}
+  .calc-field:last-child{margin-bottom:0}
+  .calc-field .lab{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:9px}
+  .calc-field .lab span:first-child{font-weight:600; font-size:14px}
+  .calc-field .val{font-family:"Bricolage Grotesque"; font-weight:700; font-size:18px; color:var(--berry)}
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:7px; border-radius:99px;
+    background:var(--berry-soft); outline:none; margin:0;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:24px; height:24px; border-radius:50%;
+    background:var(--berry); border:3px solid #fff; box-shadow:0 2px 6px rgba(180,40,94,.4); cursor:pointer;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:24px; height:24px; border-radius:50%; background:var(--berry);
+    border:3px solid #fff; box-shadow:0 2px 6px rgba(180,40,94,.4); cursor:pointer;
+  }
+  .calc-result{
+    margin-top:18px; background:linear-gradient(135deg,var(--berry),var(--plum)); color:#fff;
+    border-radius:18px; padding:20px; box-shadow:var(--shadow-lg);
+  }
+  .calc-result .cap{font-size:12px; letter-spacing:.6px; text-transform:uppercase; opacity:.85; margin:0}
+  .calc-result .big{font-family:"Bricolage Grotesque"; font-weight:800; font-size:40px; line-height:1; margin:6px 0 2px; letter-spacing:-1px}
+  .calc-result .big .s{font-size:18px; font-weight:600; opacity:.9; margin-right:4px}
+  .nudge{display:flex; gap:8px; align-items:flex-start; margin-top:16px; background:var(--berry-soft);
+    border-radius:13px; padding:12px 14px; font-size:13.5px; color:#7a1c40; font-weight:500}
+  .nudge b{color:var(--berry)}
+
+  /* Comparison card */
+  .compare{margin-top:16px}
+  .bars{margin-top:6px}
+  .barrow{margin-bottom:14px}
+  .barrow:last-child{margin-bottom:0}
+  .barrow .lab{display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px}
+  .barrow .lab .who{font-weight:600}
+  .barrow .lab .amt{font-family:"Bricolage Grotesque"; font-weight:700}
+  .track{background:var(--line); border-radius:99px; height:12px; overflow:hidden}
+  .fill{height:100%; border-radius:99px; transition:width .5s ease}
+  .fill.you{background:linear-gradient(90deg,var(--berry),var(--plum))}
+  .fill.peer{background:var(--gold)}
+  .meta-row{display:flex; gap:14px; font-size:12px; color:var(--muted); margin-top:4px}
+
+  .gap-note{display:flex; gap:8px; align-items:flex-start; margin-top:16px; background:var(--berry-soft);
+    border-radius:13px; padding:12px 14px; font-size:13.5px; color:#7a1c40; font-weight:500}
+  .gap-note b{color:var(--berry)}
+
+  .top-note{display:flex; gap:8px; align-items:flex-start; margin-top:16px; background:#fbf1de;
+    border-radius:13px; padding:12px 14px; font-size:13.5px; color:#7a5a1c; font-weight:500}
+  .top-note b{color:var(--gold)}
+
+  /* Category leaderboard -- side by side cards, top 10 */
+  .lb-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(128px, 1fr)); gap:10px}
+  .lb-card{
+    background:var(--plum-soft); border-radius:16px; padding:14px 10px; text-align:center;
+    border:2px solid transparent;
+  }
+  .lb-card.me{background:var(--berry-soft); border-color:var(--berry)}
+  .lb-card .rank{
+    width:22px; height:22px; border-radius:50%; display:grid; place-items:center; margin:0 auto 8px;
+    font-family:"Bricolage Grotesque"; font-weight:700; font-size:11px; background:#fff; color:var(--plum)
+  }
+  .lb-card.me .rank{color:var(--berry)}
+  .lb-card:first-child .rank{background:linear-gradient(135deg,#f4d68a,var(--gold)); color:#5a3d09}
+  .lb-card .nm{font-weight:700; font-size:12.5px; margin-bottom:6px; overflow-wrap:break-word}
+  .lb-card.me .nm{color:var(--berry)}
+  .lb-card .amt{font-family:"Bricolage Grotesque"; font-weight:800; font-size:15px; color:var(--berry)}
+  .lb-card .amt .s{font-size:10px; font-weight:600; opacity:.7}
+  .lb-card .meta{font-size:11px; color:var(--muted); margin-top:4px}
+  .lb-card .meta .star{color:var(--gold)}
+
+  footer{margin-top:34px; text-align:center; font-size:12px; color:var(--muted); line-height:1.6}
+  .hidden{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand"><span class="dot"></span>KSA Beauty</div>
+    <h1 id="pageTitle">Your monthly earnings</h1>
+    <p id="pageTagline">Pick your name to see your numbers and how you compare.</p>
+  </header>
+
+  <!-- ===== Name picker ===== -->
+  <section id="pickerSection">
+    <div class="card">
+      <p class="eyebrow">Find yourself</p>
+      <h2 class="sec-title">Pick your name</h2>
+      <div class="search-row">
+        <input type="text" id="nameSearch" placeholder="Start typing your name..." autocomplete="off" />
+      </div>
+      <p class="search-hint">Type a few letters of your name to find yourself.</p>
+      <div class="results" id="results"></div>
+    </div>
+  </section>
+
+  <!-- ===== Profile ===== -->
+  <section id="profileSection" class="hidden">
+    <button class="change-name" id="changeNameBtn">← Change name</button>
+
+    <p class="sec-title" id="greeting" style="margin-top:0"></p>
+    <div class="tabs" id="monthTabs"></div>
+
+    <div class="hero">
+      <p class="cap">You earned</p>
+      <div class="big"><span class="sar">SAR</span><span id="youAmt" class="num">0</span></div>
+      <div class="stats">
+        <span><b id="youRating">-</b> ★ rating</span>
+        <span><b id="youJobs">-</b> jobs</span>
+        <span><b id="youReb">-</b> rebookings</span>
+      </div>
+    </div>
+
+    <div class="tabs" id="sectionTabs" style="margin-top:16px">
+      <button class="tab" data-sec="breakdown">Breakdown</button>
+      <button class="tab" data-sec="compare">Compare</button>
+      <button class="tab" data-sec="leaderboard">Leaderboard</button>
+      <button class="tab" data-sec="commission">Commission</button>
+      <button class="tab" data-sec="calculator">Calculator</button>
+    </div>
+
+    <div class="tab-panel" id="panelBreakdown">
+      <div class="card">
+        <p class="eyebrow">Breakdown</p>
+        <p class="sec-sub">What makes up your total this month.</p>
+        <div id="breakdownList"></div>
+        <p class="search-hint hidden" id="perfIncentiveNote" style="margin-top:12px">
+          🎯 Performance incentive is given to professionals whose salary is less than SAR 2,300 and who
+          maintain a high rating.
+        </p>
+        <p class="search-hint hidden" id="otherBonusesNote" style="margin-top:12px">
+          "Other bonuses" covers anything in your total that isn't rebooking incentive, commission,
+          tips, or performance incentive — for example a referral or shadowing bonus.
+        </p>
+      </div>
+    </div>
+
+    <div class="tab-panel hidden" id="panelCompare">
+      <div class="card compare" id="peerCard">
+        <p class="eyebrow">How you compare</p>
+        <p class="sec-sub" id="compareSub">A colleague who did the same number of jobs.</p>
+        <div class="bars" id="bars"></div>
+        <div class="gap-note" id="gapNote"></div>
+        <div class="top-note hidden" id="topNote">
+          <span>🏆</span>
+          <span><b>You're among the highest earners</b> for your workload this month.</span>
+        </div>
+      </div>
+      <div class="card hidden" id="noCompareCard">
+        <p class="sec-sub" style="margin:0">No comparison to show for a month with 0 jobs.</p>
+      </div>
+    </div>
+
+    <div class="tab-panel hidden" id="panelLeaderboard">
+      <p class="eyebrow" id="lbEyebrow">Category</p>
+      <p class="sec-sub" id="lbSub">Top earners, highest to lowest.</p>
+      <div class="tabs catrow" id="lbCatTabs"></div>
+      <div class="card">
+        <div class="lb-row" id="lbRow"></div>
+      </div>
+    </div>
+
+    <div class="tab-panel hidden" id="panelCommission">
+      <div class="card">
+        <p class="eyebrow">How commission works</p>
+        <p class="sec-sub">Approximate — the real amount also depends on order value, not just job count.</p>
+        <ul class="commission-list" id="commissionList"></ul>
+      </div>
+    </div>
+
+    <div class="tab-panel hidden" id="panelCalculator">
+      <div class="card">
+        <p class="eyebrow">Plan ahead</p>
+        <p class="sec-sub">See your earning potential by sliding your rating and rebookings.</p>
+
+        <div class="calc-field">
+          <div class="lab"><span>Your average rating</span><span class="val"><span id="calcRatOut">4.90</span> ★</span></div>
+          <input type="range" id="calcRat" min="4.0" max="5.0" step="0.01" value="4.9" />
+        </div>
+        <div class="calc-field">
+          <div class="lab"><span>Rebookings this month</span><span class="val" id="calcRebOut">20</span></div>
+          <input type="range" id="calcReb" min="0" max="60" step="1" value="20" />
+        </div>
+
+        <div class="calc-result">
+          <p class="cap">Estimated rebooking incentive</p>
+          <div class="big num"><span class="s">SAR</span><span id="calcTotal">0</span></div>
+        </div>
+        <div class="nudge" id="calcNudge">
+          <span>💡</span>
+          <span><b>A higher rating and more rebookings earn you more.</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Your numbers are only shown after you pick your own name.
+  </footer>
+</div>
+
+<script>
+const DATA = __DATA__;
+const NAMES = __NAMES__;
+const BOARDS = __BOARDS__;
+
+(function(){
+  var CAT_LABELS = {
+    "Salon Nails": "Nails",
+    "Spa for Women": "Spa",
+    "Advanced Facecare": "Facecare",
+    "Hair for Women": "Hair"
+  };
+
+  // Approximate guide only -- the real trigger is total job VALUE (roughly
+  // SAR 15,000), not just a job count. Job-count thresholds differ by
+  // category and are for illustration.
+  var COMMISSION_INFO = [
+    { cat: "Salon Nails", threshold: 90 },
+    { cat: "Spa for Women", threshold: 90 },
+    { cat: "Advanced Facecare", threshold: 90 },
+    { cat: "Hair for Women", threshold: 90 }
+  ];
+
+  function fmt(n){ return Math.round(n).toLocaleString(); }
+
+  function renderCommissionInfo(myCat){
+    document.getElementById('commissionList').innerHTML = COMMISSION_INFO.map(function(c){
+      var isMine = c.cat === myCat;
+      return '<li class="' + (isMine ? 'mine' : '') + '">' +
+        (CAT_LABELS[c.cat] || c.cat) + (isMine ? '<span class="tag">Your category</span>' : '') +
+        ': once you pass about ' + c.threshold + ' jobs in a month (roughly SAR 15,000 in total job ' +
+        'value), you earn 3% commission on the value of every job above that.' +
+      '</li>';
+    }).join('');
+  }
+
+  /* ===== Name search / picker ===== */
+  var nameSearch = document.getElementById('nameSearch'),
+      results = document.getElementById('results'),
+      pickerSection = document.getElementById('pickerSection'),
+      profileSection = document.getElementById('profileSection'),
+      changeNameBtn = document.getElementById('changeNameBtn');
+
+  var curLno = null, curMonth = null, curLbCat = null;
+
+  /* ===== Section tabs ===== */
+  var sectionTabs = document.getElementById('sectionTabs');
+  var PANEL_IDS = {
+    breakdown: 'panelBreakdown', compare: 'panelCompare',
+    leaderboard: 'panelLeaderboard', commission: 'panelCommission',
+    calculator: 'panelCalculator'
+  };
+  function switchSection(sec){
+    Array.prototype.forEach.call(sectionTabs.children, function(b){
+      b.classList.toggle('on', b.dataset.sec === sec);
+    });
+    Object.keys(PANEL_IDS).forEach(function(key){
+      document.getElementById(PANEL_IDS[key]).classList.toggle('hidden', key !== sec);
+    });
+  }
+  Array.prototype.forEach.call(sectionTabs.children, function(b){
+    b.onclick = function(){ switchSection(b.dataset.sec); };
+  });
+
+  function renderResults(query){
+    var q = query.trim().toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+
+    var matches = NAMES.filter(function(n){
+      return n.label.toLowerCase().indexOf(q) !== -1;
+    });
+
+    if (!matches.length) {
+      results.innerHTML = '<div class="no-results">No one found. Check the spelling and try again.</div>';
+      return;
+    }
+
+    var groups = {};
+    matches.forEach(function(n){
+      (groups[n.cat] = groups[n.cat] || []).push(n);
+    });
+
+    results.innerHTML = Object.keys(groups).map(function(cat){
+      var items = groups[cat].map(function(n){
+        return '<button type="button" class="result-item" data-l="' + n.l + '">' + n.label + '</button>';
+      }).join('');
+      return '<div class="grp"><p class="grp-title">' + (CAT_LABELS[cat] || cat) + '</p>' + items + '</div>';
+    }).join('');
+
+    Array.prototype.forEach.call(results.querySelectorAll('.result-item'), function(btn){
+      btn.onclick = function(){ selectPro(btn.dataset.l); };
+    });
+  }
+
+  nameSearch.addEventListener('input', function(){ renderResults(nameSearch.value); });
+
+  function selectPro(lno){
+    var pro = DATA[lno];
+    if (!pro) return;
+    curLno = lno;
+
+    var months = Object.keys(pro.m);
+    curMonth = months[months.length - 1];
+
+    var monthTabs = document.getElementById('monthTabs');
+    monthTabs.innerHTML = '';
+    months.forEach(function(m){
+      var b = document.createElement('button');
+      b.className = 'tab' + (m === curMonth ? ' on' : '');
+      b.textContent = m;
+      b.dataset.m = m;
+      b.onclick = function(){
+        curMonth = m;
+        Array.prototype.forEach.call(monthTabs.children, function(x){
+          x.classList.toggle('on', x.dataset.m === curMonth);
+        });
+        render();
+      };
+      monthTabs.appendChild(b);
+    });
+
+    document.getElementById('greeting').textContent = 'Hi ' + pro.name.split(',')[0].split(' ')[0] + ' 👋';
+    renderCommissionInfo(pro.cat);
+
+    curLbCat = pro.cat;
+    var lbCatTabs = document.getElementById('lbCatTabs');
+    lbCatTabs.innerHTML = '';
+    Object.keys(CAT_LABELS).forEach(function(cat){
+      var b = document.createElement('button');
+      b.className = 'tab' + (cat === curLbCat ? ' on' : '');
+      b.textContent = CAT_LABELS[cat];
+      b.dataset.cat = cat;
+      b.onclick = function(){
+        curLbCat = cat;
+        Array.prototype.forEach.call(lbCatTabs.children, function(x){
+          x.classList.toggle('on', x.dataset.cat === curLbCat);
+        });
+        renderLeaderboard();
+      };
+      lbCatTabs.appendChild(b);
+    });
+
+    pickerSection.classList.add('hidden');
+    profileSection.classList.remove('hidden');
+    switchSection('breakdown');
+    render();
+  }
+
+  changeNameBtn.onclick = function(){
+    profileSection.classList.add('hidden');
+    pickerSection.classList.remove('hidden');
+    nameSearch.value = '';
+    results.innerHTML = '';
+    nameSearch.focus();
+  };
+
+  function render(){
+    var pro = DATA[curLno];
+    var d = pro.m[curMonth];
+
+    document.getElementById('youAmt').textContent = fmt(d.you);
+    document.getElementById('youRating').textContent = d.r.toFixed(2);
+    document.getElementById('youJobs').textContent = d.j;
+    document.getElementById('youReb').textContent = d.rb;
+
+    var breakdownRows = [
+      ['Rebooking incentive', d.rbi],
+      ['Commission', d.comm],
+      ['Tips', d.tip]
+    ];
+    if (d.perf > 0) breakdownRows.push(['Performance incentive 🎯', d.perf]);
+    if (d.other > 0) breakdownRows.push(['Other bonuses', d.other]);
+    document.getElementById('breakdownList').innerHTML = breakdownRows.map(function(row){
+      return '<div class="bd-item"><span class="bd-lbl">' + row[0] + '</span>' +
+        '<span class="bd-val num">SAR ' + fmt(row[1]) + '</span></div>';
+    }).join('');
+    document.getElementById('otherBonusesNote').classList.toggle('hidden', d.other <= 0);
+    document.getElementById('perfIncentiveNote').classList.toggle('hidden', d.perf <= 0);
+
+    var bars = document.getElementById('bars');
+    var gapNote = document.getElementById('gapNote');
+    var topNote = document.getElementById('topNote');
+    var compareSub = document.getElementById('compareSub');
+    var peerCard = document.getElementById('peerCard');
+
+    var noCompareCard = document.getElementById('noCompareCard');
+
+    if (d.j === 0) {
+      peerCard.classList.add('hidden');
+      noCompareCard.classList.remove('hidden');
+    } else if (d.peer) {
+      noCompareCard.classList.add('hidden');
+      peerCard.classList.remove('hidden');
+      gapNote.classList.remove('hidden');
+      topNote.classList.add('hidden');
+      compareSub.textContent = 'A colleague who did the same ' + d.j + ' jobs this month. Your total includes tips; the colleague\'s is rebooking + commission only.';
+
+      var maxVal = Math.max(d.you, d.peer.e, 1);
+      bars.innerHTML =
+        '<div class="barrow">' +
+          '<div class="lab"><span class="who">You</span><span class="amt num">SAR ' + fmt(d.you) + '</span></div>' +
+          '<div class="track"><div class="fill you" style="width:' + (100 * d.you / maxVal) + '%"></div></div>' +
+          '<div class="meta-row"><span>★ ' + d.r.toFixed(2) + '</span><span>' + d.rb + ' rebookings</span></div>' +
+        '</div>' +
+        '<div class="barrow">' +
+          '<div class="lab"><span class="who">A colleague</span><span class="amt num">SAR ' + fmt(d.peer.e) + '</span></div>' +
+          '<div class="track"><div class="fill peer" style="width:' + (100 * d.peer.e / maxVal) + '%"></div></div>' +
+          '<div class="meta-row"><span>★ ' + d.peer.r.toFixed(2) + '</span><span>' + d.peer.rb + ' rebookings</span></div>' +
+        '</div>';
+
+      var gap = Math.round(d.peer.e - d.you);
+      if (gap > 0) {
+        gapNote.classList.remove('hidden');
+        gapNote.innerHTML = '<span>💡</span><span><b>+SAR ' + fmt(gap) + ' within reach</b> — the difference is a higher rating and more rebookings.</span>';
+      } else {
+        gapNote.classList.add('hidden');
+      }
+    } else {
+      noCompareCard.classList.add('hidden');
+      peerCard.classList.remove('hidden');
+      gapNote.classList.add('hidden');
+      topNote.classList.remove('hidden');
+      compareSub.textContent = 'Your standing among peers with a similar workload.';
+      bars.innerHTML =
+        '<div class="barrow">' +
+          '<div class="lab"><span class="who">You</span><span class="amt num">SAR ' + fmt(d.you) + '</span></div>' +
+          '<div class="track"><div class="fill you" style="width:100%"></div></div>' +
+          '<div class="meta-row"><span>★ ' + d.r.toFixed(2) + '</span><span>' + d.rb + ' rebookings</span></div>' +
+        '</div>';
+    }
+
+    renderLeaderboard();
+    prefillCalculator(d);
+  }
+
+  function renderLeaderboard(){
+    var pro = DATA[curLno];
+    var lbRow = document.getElementById('lbRow');
+    var lbEyebrow = document.getElementById('lbEyebrow');
+    var lbSub = document.getElementById('lbSub');
+    var label = CAT_LABELS[curLbCat] || curLbCat;
+
+    lbEyebrow.textContent = label;
+    lbSub.textContent = 'Top earners in ' + label + ' this month, highest to lowest.';
+
+    var rows;
+    if (curLbCat === pro.cat) {
+      rows = pro.m[curMonth].lb || [];
+    } else {
+      rows = (BOARDS[curMonth] && BOARDS[curMonth][curLbCat]) || [];
+    }
+
+    if (!rows.length) {
+      lbRow.innerHTML = '<div class="sec-sub" style="margin:0">No data for this category this month.</div>';
+      return;
+    }
+
+    lbRow.innerHTML = rows.map(function(p, i){
+      return '<div class="lb-card' + (p.me ? ' me' : '') + '">' +
+        '<div class="rank">' + (i + 1) + '</div>' +
+        '<div class="nm">' + (p.me ? 'You' : p.n) + '</div>' +
+        '<div class="amt"><span class="s">SAR</span> ' + fmt(p.e) + '</div>' +
+        '<div class="meta"><span class="star">★</span> ' + p.r.toFixed(2) + ' · ' + p.rb + ' rebooking' + (p.rb === 1 ? '' : 's') + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ===== Earnings calculator (rating + rebookings -> estimated incentive) =====
+     Uses the real rebooking-rate tiers internally so the math is accurate, but
+     never prints the rate or the rating thresholds in the UI -- only the
+     resulting estimate and generic guidance. */
+  function rebookRate(rating){
+    if (rating >= 4.97) return 18;
+    if (rating >= 4.90) return 15;
+    if (rating >= 4.85) return 8;
+    return 0;
+  }
+
+  var calcRat = document.getElementById('calcRat'),
+      calcReb = document.getElementById('calcReb'),
+      calcRatOut = document.getElementById('calcRatOut'),
+      calcRebOut = document.getElementById('calcRebOut'),
+      calcTotal = document.getElementById('calcTotal'),
+      calcNudge = document.getElementById('calcNudge');
+
+  function prefillCalculator(d){
+    calcRat.value = d.r > 0 ? d.r : 4.9;
+    calcReb.value = d.rb;
+    renderCalculator();
+  }
+
+  function renderCalculator(){
+    var r = +calcRat.value, nReb = +calcReb.value;
+    calcRatOut.textContent = r.toFixed(2);
+    calcRebOut.textContent = nReb;
+
+    var rate = rebookRate(r);
+    calcTotal.textContent = fmt(nReb * rate);
+
+    if (rate === 0) {
+      calcNudge.innerHTML = '<span>💡</span><span><b>Raise your rating</b> to start earning a rebooking incentive.</span>';
+    } else if (r < 4.97) {
+      calcNudge.innerHTML = '<span>💡</span><span><b>A higher rating unlocks a better rate</b> per rebooking — keep improving to earn more.</span>';
+    } else {
+      calcNudge.innerHTML = '<span>💡</span><span><b>You\'re at the top rating tier</b> — more rebookings now earn you the most.</span>';
+    }
+  }
+
+  calcRat.addEventListener('input', renderCalculator);
+  calcReb.addEventListener('input', renderCalculator);
+})();
+</script>
+</body>
+</html>
