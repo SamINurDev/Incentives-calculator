@@ -231,14 +231,6 @@
         <p class="eyebrow">Breakdown</p>
         <p class="sec-sub">What makes up your total this month.</p>
         <div id="breakdownList"></div>
-        <p class="search-hint hidden" id="perfIncentiveNote" style="margin-top:12px">
-          🎯 Performance incentive is given to professionals whose salary is less than SAR 2,300 and who
-          maintain a high rating.
-        </p>
-        <p class="search-hint hidden" id="otherBonusesNote" style="margin-top:12px">
-          "Other bonuses" covers anything in your total that isn't rebooking incentive, commission,
-          tips, or performance incentive — for example a referral or shadowing bonus.
-        </p>
       </div>
     </div>
 
@@ -471,19 +463,18 @@ const BOARDS = {"April":{"Salon Nails":[{"n":"Rianah Cagadas","e":1070.0,"r":4.9
     document.getElementById('youJobs').textContent = d.j;
     document.getElementById('youReb').textContent = d.rb;
 
+    // Performance incentive and any other-bonus amounts are still counted in
+    // d.you (the hero total) -- they're deliberately just not broken out as
+    // their own visible rows here.
     var breakdownRows = [
       ['Rebooking incentive', d.rbi],
       ['Commission', d.comm],
       ['Tips', d.tip]
     ];
-    if (d.perf > 0) breakdownRows.push(['Performance incentive 🎯', d.perf]);
-    if (d.other > 0) breakdownRows.push(['Other bonuses', d.other]);
     document.getElementById('breakdownList').innerHTML = breakdownRows.map(function(row){
       return '<div class="bd-item"><span class="bd-lbl">' + row[0] + '</span>' +
         '<span class="bd-val num">SAR ' + fmt(row[1]) + '</span></div>';
     }).join('');
-    document.getElementById('otherBonusesNote').classList.toggle('hidden', d.other <= 0);
-    document.getElementById('perfIncentiveNote').classList.toggle('hidden', d.perf <= 0);
 
     var bars = document.getElementById('bars');
     var gapNote = document.getElementById('gapNote');
@@ -618,6 +609,5 @@ const BOARDS = {"April":{"Salon Nails":[{"n":"Rianah Cagadas","e":1070.0,"r":4.9
   calcReb.addEventListener('input', renderCalculator);
 })();
 </script>
-
-
-</body></html>
+</body>
+</html>

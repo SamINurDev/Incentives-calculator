@@ -80,20 +80,18 @@ above on privacy grounds -- both were raised as concerns and explicitly overridd
   the source SQL first -- removing it will silently reintroduce the "mystery" residual for every pro
   outside Riyadh/Jeddah (the majority of the roster).
 - PERFORMANCE INCENTIVE: the source SQL's actual condition is
-  `basic_salary IN ('2000','1700') AND average_rating >= 4.85 THEN 300`. The business owner was told
-  this exact condition (not just "less than 2300") and, after that, EXPLICITLY confirmed twice that the
-  salary threshold should be stated on the page anyway, in their own words ("salary is less than 2300").
-  This is now a CONFIRMED, DELIBERATE second exception to the original "never expose base salary" rule
-  (same status as the commission-explainer exception) -- do not revert it, and do not re-raise the
-  privacy concern as if it were still open; it was raised and the owner overrode it knowingly.
-  Only the resulting PERFORMANCE_INCENTIVE AMOUNT (already in the xlsx, no salary column ever touches
-  this pipeline) is a real number pulled from data; the "SAR 2,300" / "high rating" wording in the UI
-  caption is static, hand-approved text -- NOT derived from or read out of the actual SQL threshold
-  (which is really "salary IN (2000, 1700)" and "rating >= 4.85", not "< 2300"). If the real thresholds
-  ever change, this caption will silently go stale -- there is no code path connecting them. Caption
-  currently: "Performance incentive is given to professionals whose salary is less than SAR 2,300 and
-  who maintain a high rating." Do not touch this wording without an equally explicit ask, in either
-  direction (neither hiding it again nor "correcting" it to the literal SQL thresholds).
+  `basic_salary IN ('2000','1700') AND average_rating >= 4.85 THEN 300`. History here (most recent
+  decision wins): the owner first asked to state the salary threshold explicitly on the page (an
+  explicit, confirmed exception to "never expose base salary" -- see the commission-explainer exception
+  above); then, immediately after that shipped, asked to remove BOTH the "Performance incentive" row and
+  the "Other bonuses" row from the visible breakdown entirely, while still counting both amounts inside
+  the hero "You earned" total silently. So as of now: `perf` and `other` are still computed by
+  build_data.py and still present in the DATA payload (and still folded into `you`/EARNED_DEFINITION),
+  but index_template.html's breakdown only ever renders Rebooking incentive / Commission / Tips as rows
+  -- no performance-incentive caption, no salary figure, no "other bonuses" row anywhere in the visible
+  UI. The salary-disclosure EXCEPTION itself is not un-confirmed by this -- if a performance-incentive
+  row is ever reintroduced, the earlier-approved "salary is less than SAR 2,300" wording is still the
+  approved caption text, not a fresh privacy question to re-raise.
 - "Earned" (this view) = EARNED_DEFINITION above. Use the RECORDED values; do NOT recompute from a formula.
 - Categories: "Salon Nails", "Spa for Women", "Advanced Facecare", "Hair for Women".
 - If two professionals share the exact same display name, disambiguate in the dropdown (e.g. append
@@ -152,10 +150,11 @@ above on privacy grounds -- both were raised as concerns and explicitly overridd
 - Below the hero, content is split into SECTION TABS (not one long scrolling page -- switching this
   from a scroll to tabs was itself a direct request, after "why can't I see the leaderboard" turned out
   to mean "I don't want to scroll to find it"). Exactly one section panel is visible at a time:
-    1. Breakdown (default tab) -- Rebooking incentive / Commission / Tips / Other bonuses, summing
-       exactly to the hero total. ("Other bonuses" = OT + Ramadan + any other incentive component
-       bundled into TOTAL_INCENTIVE beyond rebooking incentive + commission -- e.g. performance/
-       rating/referral/shadowing incentives. Still no rates or formulas, just recorded amounts.)
+    1. Breakdown (default tab) -- Rebooking incentive / Commission / Tips ONLY. These three do NOT sum
+       to the hero total -- performance incentive and any other-bonus amount (OT, Ramadan, referral,
+       shadowing, etc.) are real money folded silently into the hero total but deliberately not broken
+       out as their own rows (owner's explicit request; see "Performance incentive" under Data). Don't
+       "fix" the apparent mismatch by adding those rows back without an equally explicit ask.
     2. Compare -- "A colleague with the same N jobs earned SAR Y" (colleague = rebooking + commission
        ONLY; see "Peer benchmark" above for the asymmetric-display caveat) with the colleague's rating
        and rebookings; two comparison bars (You = full total incl. tips, vs colleague = partial metric)
