@@ -92,7 +92,33 @@ above on privacy grounds -- both were raised as concerns and explicitly overridd
   UI. The salary-disclosure EXCEPTION itself is not un-confirmed by this -- if a performance-incentive
   row is ever reintroduced, the earlier-approved "salary is less than SAR 2,300" wording is still the
   approved caption text, not a fresh privacy question to re-raise.
-- "Earned" (this view) = EARNED_DEFINITION above. Use the RECORDED values; do NOT recompute from a formula.
+- SHARE-PROFILE ("visiting card") BONUS: a SEPARATE Jarvis query, id 525305, named "Beauty Share
+  Profile" internally, data_source_id 20, same `date_range` parameter mechanics as the main query. It
+  returns only two columns: `ref_provider_id` and `visiting_card_incentive` (already `50 * count of
+  qualifying bookings`, so a multiple of 50). Join key is `ref_provider_id` = our `PROVIDER_ID`.
+  Mechanism per the SQL: a customer views a pro's profile (`event_page = 'provider_profile'`,
+  `event_trigger_source = 'pro_profile'`), a DIFFERENT new/FTP customer then books through that same
+  referring customer's user_id within 7 days AND gets the service delivered -> the referring pro earns
+  SAR 50 per such qualifying booking. The owner's stated description ("a customer shares a
+  professional's profile with a new customer...") is the approved public wording -- use it. One
+  discrepancy worth knowing: the SQL also filters to only providers with `average_rating >= 4.8`
+  (RATING__AVG__LAST_100_JOBS) -- a rating gate NOT mentioned in the owner's description. Flagged once;
+  not stated in the UI (consistent with not restating other internal formula gates), but don't be
+  surprised if a pro below 4.8 shows 0 despite otherwise-qualifying referrals -- that's this filter, not
+  a bug.
+  Pulled and stored separately from the main incentives file: `<Month>_share.xlsx` (sheet "result",
+  columns `ref_provider_id`, `visiting_card_incentive`), one per month, loaded via
+  `load_share_month()`/`SHARE_FILES` in build_data.py (mirrors `MONTH_FILES` but is its OWN dict --
+  don't conflate the two). A month present in MONTH_FILES but absent from SHARE_FILES defaults everyone
+  to a 0 share bonus for that month (safe fallback, not an error) -- so this can lag behind the main
+  incentives file if the share-profile pull hasn't been run yet for a new month.
+  UI: shown as its own visible breakdown row ("Share profile bonus 🔗", only when >0) WITH an
+  explanatory caption -- unlike performance incentive/other bonuses (hidden per the section above), the
+  owner explicitly asked for this one to be visible with explanation. Added into `you` (the hero total);
+  deliberately NOT added into `yc`/COMPARE (same treatment as tips -- unrelated to rebooking/commission
+  effort).
+- "Earned" (this view) = EARNED_DEFINITION above, PLUS the share-profile bonus. Use the RECORDED values;
+  do NOT recompute from a formula.
 - Categories: "Salon Nails", "Spa for Women", "Advanced Facecare", "Hair for Women".
 - If two professionals share the exact same display name, disambiguate in the dropdown (e.g. append
   city or last initial) so selection is unambiguous.
@@ -150,11 +176,14 @@ above on privacy grounds -- both were raised as concerns and explicitly overridd
 - Below the hero, content is split into SECTION TABS (not one long scrolling page -- switching this
   from a scroll to tabs was itself a direct request, after "why can't I see the leaderboard" turned out
   to mean "I don't want to scroll to find it"). Exactly one section panel is visible at a time:
-    1. Breakdown (default tab) -- Rebooking incentive / Commission / Tips ONLY. These three do NOT sum
-       to the hero total -- performance incentive and any other-bonus amount (OT, Ramadan, referral,
-       shadowing, etc.) are real money folded silently into the hero total but deliberately not broken
-       out as their own rows (owner's explicit request; see "Performance incentive" under Data). Don't
-       "fix" the apparent mismatch by adding those rows back without an equally explicit ask.
+    1. Breakdown (default tab) -- Rebooking incentive / Commission / Tips, PLUS Share profile bonus 🔗
+       (only shown when >0, with its own explanatory caption -- see "Share-profile bonus" under Data).
+       These do NOT sum to the hero total -- performance incentive and any other-bonus amount (OT,
+       Ramadan, referral, shadowing, etc.) are real money folded silently into the hero total but
+       deliberately not broken out as their own rows (owner's explicit request; see "Performance
+       incentive" under Data). Don't "fix" the apparent mismatch by adding those rows back without an
+       equally explicit ask. Share-profile bonus is the one exception that DOES get its own visible row
+       (a separate, later, explicit request) -- don't hide it to "match" performance incentive/other.
     2. Compare -- "A colleague with the same N jobs earned SAR Y" (colleague = rebooking + commission
        ONLY; see "Peer benchmark" above for the asymmetric-display caveat) with the colleague's rating
        and rebookings; two comparison bars (You = full total incl. tips, vs colleague = partial metric)
@@ -211,11 +240,12 @@ above on privacy grounds -- both were raised as concerns and explicitly overridd
 const DATA = {
   "<PROVIDER_ID>": { "name": "...", "cat": "...",
     "m": { "June": { "j":jobs, "r":rating, "rb":rebookings,
-                     "you":earned_full_incl_tips,           // hero "You earned" figure
+                     "you":earned_full_incl_tips_and_share, // hero "You earned" figure
                      "yc":earned_rebooking_plus_commission, // comparison-bars "You" figure (no tips, city-adjusted)
                      "rbi":rebooking_incentive, "comm":commission,   // BOTH already city-multiplier-adjusted
                      "tip":tips, "perf":performance_incentive, "other":other_bonuses,
-                     // breakdown -- rbi + comm + tip + perf + other must always sum to "you"
+                     "share":share_profile_bonus,           // from the SEPARATE query 525305, see Data section
+                     // breakdown -- rbi + comm + tip + perf + other + share must always sum to "you"
                      "peer": {"e":rebooking_plus_commission,"r":rating,"rb":rebookings} | null,
                      "lb":  [ {"n":name,"e":earned,"r":rating,"rb":rebookings,"me":true|false}, ... ] | null } } },
                      // "lb" here is ALWAYS the viewer's own category's top-10, personalized ("me" set).

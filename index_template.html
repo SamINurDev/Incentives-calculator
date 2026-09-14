@@ -231,6 +231,10 @@
         <p class="eyebrow">Breakdown</p>
         <p class="sec-sub">What makes up your total this month.</p>
         <div id="breakdownList"></div>
+        <p class="search-hint hidden" id="shareProfileNote" style="margin-top:12px">
+          🔗 Share profile: when a customer shares your profile with someone new, and that person books
+          and gets their service delivered within 7 days, you earn SAR 50.
+        </p>
       </div>
     </div>
 
@@ -471,10 +475,12 @@ const BOARDS = __BOARDS__;
       ['Commission', d.comm],
       ['Tips', d.tip]
     ];
+    if (d.share > 0) breakdownRows.push(['Share profile bonus 🔗', d.share]);
     document.getElementById('breakdownList').innerHTML = breakdownRows.map(function(row){
       return '<div class="bd-item"><span class="bd-lbl">' + row[0] + '</span>' +
         '<span class="bd-val num">SAR ' + fmt(row[1]) + '</span></div>';
     }).join('');
+    document.getElementById('shareProfileNote').classList.toggle('hidden', !(d.share > 0));
 
     var bars = document.getElementById('bars');
     var gapNote = document.getElementById('gapNote');

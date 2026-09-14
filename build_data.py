@@ -35,6 +35,22 @@ MONTH_FILES = {
     "August": "August_incentives.xlsx",  # full month now (PAYABLE_DAYS=31), pulled live from Jarvis
 }
 
+# Share-profile ("visiting card") incentive -- SAR 50 per new customer who
+# books via a shared profile link and gets the service delivered within 7
+# days (Jarvis query id 525305, "Beauty Share Profile"). This is a SEPARATE
+# Jarvis query from the main incentives one, keyed only by PROVIDER_ID + an
+# amount, pulled per month with the same calendar-month date range. Keys here
+# should match MONTH_FILES keys (the tab label) for whichever months this has
+# been pulled for; a month with no entry here defaults everyone to 0, so it's
+# safe to add new months to MONTH_FILES before this one is backfilled.
+SHARE_FILES = {
+    "April": "April_share.xlsx",
+    "May": "May_share.xlsx",
+    "June": "June_share.xlsx",
+    "July": "July_share.xlsx",
+    "August": "August_share.xlsx",
+}
+
 BENCHMARK_PERCENTILE = 80
 CATEGORIES = ["Salon Nails", "Spa for Women", "Advanced Facecare", "Hair for Women"]
 LEADERBOARD_TOP_N = 10
@@ -102,6 +118,24 @@ def load_month(path):
     # drop obvious non-provider test rows (no L_NO at all, zero jobs)
     df = df[~((df["L_NO"] == "NAN") & (df["JOBS"] == 0))]
     return df
+
+
+def load_share_month(path):
+    """PROVIDER_ID -> share-profile ("visiting card") incentive amount for one month.
+    Returns {} if path is None/missing so a month can be added to MONTH_FILES
+    before its share data is backfilled, without erroring."""
+    if not path:
+        return {}
+    try:
+        df = pd.read_excel(path, sheet_name="result")
+    except FileNotFoundError:
+        return {}
+    df.columns = [c.strip() for c in df.columns]
+    pid_col = "ref_provider_id" if "ref_provider_id" in df.columns else "REF_PROVIDER_ID"
+    amt_col = "visiting_card_incentive" if "visiting_card_incentive" in df.columns else "VISITING_CARD_INCENTIVE"
+    df[pid_col] = df[pid_col].astype(str).str.strip()
+    df[amt_col] = pd.to_numeric(df[amt_col], errors="coerce").fillna(0)
+    return dict(zip(df[pid_col], df[amt_col]))
 
 
 def percentile_pick(sorted_ascending_values, percentile):
@@ -204,6 +238,7 @@ def disambiguate_labels(entries):
 def main():
     month_dfs = {label: load_month(path) for label, path in MONTH_FILES.items()}
     months = list(MONTH_FILES.keys())
+    share_maps = {label: load_share_month(SHARE_FILES.get(label)) for label in months}
 
     pros = {}  # PROVIDER_ID -> {"cat":..., "name":..., "city":..., "m": {month: {...}}}
     boards = {}  # month -> category -> top-N board (unpersonalized, "me" always false)
@@ -248,17 +283,25 @@ def main():
                      - row["PERFORMANCE_INCENTIVE"] + row["TOTAL_OT"] + row["RAMADAN_PRIZE"])
             other = max(0.0, round(float(other), 2))
 
+            # Share-profile ("visiting card") bonus -- SAR 50 per qualifying
+            # referred booking, from a SEPARATE Jarvis query (525305), joined
+            # here by PROVIDER_ID. Added into the hero total; deliberately NOT
+            # added into COMPARE/"yc" (unrelated to rebooking/commission
+            # effort, same treatment as tips).
+            share = round(float(share_maps.get(label, {}).get(pid, 0)), 2)
+
             pros[pid]["m"][label] = {
                 "j": int(row["JOBS"]),
                 "r": round(float(row["AVERAGE_RATING"]), 2),
                 "rb": int(row["REBOOKING_COUNT"]),
-                "you": round(float(row["EARNED"]), 2),      # full earned, for the "You earned" hero
+                "you": round(float(row["EARNED"]) + share, 2),  # full earned, for the "You earned" hero
                 "yc": round(float(row["COMPARE"]), 2),      # rebooking + commission only, for the comparison bars
                 "rbi": round(float(row["ADJ_RBI"]), 2),
                 "comm": round(float(row["ADJ_COMM"]), 2),
                 "tip": round(float(row["TOTAL_TIP"]), 2),
                 "perf": round(float(row["PERFORMANCE_INCENTIVE"]), 2),
                 "other": other,
+                "share": share,
                 "peer": peer,
                 "lb": lb,
             }
