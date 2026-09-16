@@ -67,6 +67,15 @@ above on privacy grounds -- both were raised as concerns and explicitly overridd
   returned {columns, rows} to a DataFrame and write it to <Month>_incentives.xlsx, sheet "result", to
   slot into the existing pipeline unchanged. Manual xlsx uploads from ops are still a valid fallback
   path if this API is unavailable -- both feed the same load_month() function.
+- NEVER SET `date_range.end` TO TODAY'S DATE (incident: 2026-09-15). Ratings and incentive figures for
+  the current day aren't finalized in the source system yet -- a same-day pull silently returns
+  AVERAGE_RATING missing/0 and REBOOKING_INCENTIVE/TOTAL_INCENTIVE = 0 for every active pro, while JOBS/
+  REBOOKING_COUNT/TOTAL_TIP still look normal. It LOOKS like a structurally valid result and passes a
+  naive internal-consistency check (0 reconciles fine against 0), so it can slip through undetected and
+  get auto-published. Always use YESTERDAY (today minus 1 day) as `date_range.end`, never today. The
+  scheduled task's sanity checks now include an explicit non-triviality check for this (see its prompt);
+  any manual/ad-hoc pull done in a live session should apply the same "end = yesterday" rule and the
+  same non-triviality check before treating the result as good.
 - CITY MULTIPLIER (discovered 2026-09-06 while investigating the "other bonuses" 2x-residual mystery
   from mid-August): the source SQL doubles (REBOOKING_INCENTIVE + PERC_COMM) for any pro whose CITY is
   NOT Riyadh or Jeddah (multiplier 2 vs 1) before summing into TOTAL_INCENTIVE. This is a real,
