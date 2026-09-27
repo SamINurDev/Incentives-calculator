@@ -33,7 +33,7 @@ MONTH_FILES = {
     "June": "June_incentives.xlsx",
     "July": "July_incentives.xlsx",
     "August": "August_incentives.xlsx",  # full month now (PAYABLE_DAYS=31), pulled live from Jarvis
-    "September (1-15)": "September_incentives.xlsx",  # partial month, pulled live from Jarvis
+    "September (1-26)": "September_incentives.xlsx",  # partial month, manual export (API blocked)
 }
 
 # Share-profile ("visiting card") incentive -- SAR 50 per new customer who
@@ -50,7 +50,7 @@ SHARE_FILES = {
     "June": "June_share.xlsx",
     "July": "July_share.xlsx",
     "August": "August_share.xlsx",
-    "September (1-15)": "September_share.xlsx",
+    "September (1-26)": "September_share.xlsx",  # stale (through the 15th) -- lags main file, see note above
 }
 
 BENCHMARK_PERCENTILE = 80
