@@ -67,6 +67,12 @@ above on privacy grounds -- both were raised as concerns and explicitly overridd
   returned {columns, rows} to a DataFrame and write it to <Month>_incentives.xlsx, sheet "result", to
   slot into the existing pipeline unchanged. Manual xlsx uploads from ops are still a valid fallback
   path if this API is unavailable -- both feed the same load_month() function.
+- TRANSIENT CLOUDFLARE 403 ON POST (seen 2026-09-27): the scheduled run got a persistent 403 on
+  POST /api/query_results (GET /api/queries/<id> still worked) and had to fall back to a manual xlsx
+  export, which left the share-profile file stale for that cycle. Re-trying from an interactive session
+  on 2026-10-11 worked fine, so it's transient/network-path related, not a permanent block. If it happens
+  again: retry a few times over a while before falling back, and if you do fall back, backfill the
+  share-profile file and relabel the month tab as soon as the API is reachable again.
 - NEVER SET `date_range.end` TO TODAY'S DATE (incident: 2026-09-15). Ratings and incentive figures for
   the current day aren't finalized in the source system yet -- a same-day pull silently returns
   AVERAGE_RATING missing/0 and REBOOKING_INCENTIVE/TOTAL_INCENTIVE = 0 for every active pro, while JOBS/
