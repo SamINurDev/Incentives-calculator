@@ -34,6 +34,7 @@ MONTH_FILES = {
     "July": "July_incentives.xlsx",
     "August": "August_incentives.xlsx",  # full month now (PAYABLE_DAYS=31), pulled live from Jarvis
     "September": "September_incentives.xlsx",  # full month (PAYABLE_DAYS=30), pulled live from Jarvis through Sep 30
+    "October (1-18)": "October_incentives.xlsx",  # partial month, pulled live from Jarvis through Oct 18
 }
 
 # Share-profile ("visiting card") incentive -- SAR 50 per new customer who
@@ -51,6 +52,7 @@ SHARE_FILES = {
     "July": "July_share.xlsx",
     "August": "August_share.xlsx",
     "September": "September_share.xlsx",
+    "October (1-18)": "October_share.xlsx",
 }
 
 BENCHMARK_PERCENTILE = 80
